@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="livebutton-1.0.0">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/66a1eaf134df1647ac852957908e6f1b2c1a4a79/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/66a1eaf134df1647ac852957908e6f1b2c1a4a79/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.dakatso/livebutton/1.0.0/d5c8954109ec866df9248f22388c5485a042f479/livebutton-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

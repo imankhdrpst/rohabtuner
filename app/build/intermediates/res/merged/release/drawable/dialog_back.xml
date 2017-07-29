@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <corners android:radius="@dimen/start_curve" />
+
+    <gradient android:angle="270"
+        android:centerColor="@android:color/white"
+        android:endColor="@android:color/white"
+        android:startColor="@android:color/white"
+        />
+</shape><!-- From: file:/C:/Projects/sout_azin/_TUNER_VERSIONS_SRC/TurkishTunerOriginal/app/src/main/res/drawable/dialog_back.xml -->

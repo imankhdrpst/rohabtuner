@@ -1,0 +1,12 @@
+int attr backgroundColor 0x7f010002
+int attr corners 0x7f010004
+int attr normalHeight 0x7f010001
+int attr pressedHeight 0x7f010000
+int attr shadowColor 0x7f010003
+int string app_name 0x7f020000
+int[] styleable livebutton { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 }
+int styleable livebutton_backgroundColor 2
+int styleable livebutton_corners 4
+int styleable livebutton_normalHeight 1
+int styleable livebutton_pressedHeight 0
+int styleable livebutton_shadowColor 3

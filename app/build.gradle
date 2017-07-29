@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        soutazinconfig {
+            keyAlias 'iman'
+            keyPassword '09126195690'
+            storeFile file('soutazinqtuner.keystore')
+            storePassword '09126195690'
+        }
+    }
+    compileSdkVersion 14
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+
+
+    }
+    productFlavors {
+        turkishdemo {
+            applicationId "com.soutazin.turkishtunerdemo"
+            buildConfigField 'String', 'TYPE', '"TURKISH_DEMO"'
+            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
+            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
+            resValue "string", "app_name", "Turkish Tuner Demo"
+            minSdkVersion 15
+            targetSdkVersion 15
+            versionCode 2
+            versionName "1.1"
+        }
+
+        turkish {
+            applicationId "com.soutazin.turkishtuner"
+            buildConfigField 'String', 'TYPE', '"TURKISH"'
+            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
+            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
+            resValue "string", "app_name", "Turkish Tuner"
+            minSdkVersion 15
+            targetSdkVersion 15
+            versionCode 2
+            versionName "1.1"
+        }
+
+        persiandemo {
+            applicationId "com.soutazin.persiantunerdemo"
+            buildConfigField 'String', 'TYPE', '"PERSIAN_DEMO"'
+            buildConfigField 'String', 'NATIONALITY', '"Persian"'
+            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
+            resValue "string", "app_name", "Persian Tuner Demo"
+            minSdkVersion 15
+            targetSdkVersion 15
+            versionCode 2
+            versionName "1.1"
+        }
+        persian {
+            applicationId "com.soutazin.persiantuner"
+            buildConfigField 'String', 'TYPE', '"PERSIAN"'
+            buildConfigField 'String', 'NATIONALITY', '"Persian"'
+            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
+            resValue "string", "app_name", "Persian Tuner"
+            minSdkVersion 15
+            targetSdkVersion 15
+            versionCode 2
+            versionName "1.1"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/TarsosDSP-Android-latest.jar')
+    compile 'com.github.traex.rippleeffect:library:1.3'
+    compile 'com.github.dakatso:livebutton:1.0.0'
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:background="@drawable/dialog_back"
+    android:layout_height="wrap_content"
+>
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+        android:padding="@dimen/setting_items_padding"
+        android:background="@drawable/mainback"
+
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tone Genrator"
+            android:layout_margin="@dimen/setting_items_padding"
+            android:layout_gravity="center"
+            android:id="@+id/btn_tone_generator"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tuner/Tone Generator Setting"
+            android:layout_margin="@dimen/setting_items_padding"
+            android:layout_gravity="center"
+            android:id="@+id/btn_setting"
+            />
+
+
+
+            </LinearLayout>
+
+</LinearLayout><!-- From: file:/C:/Projects/sout_azin/_TUNER_VERSIONS_SRC/TurkishTunerOriginal/app/src/main/res/layout/options_activity.xml -->

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".MainActivity"
+        >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/mainback"
+        android:scaleType="fitXY"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/layCentsViewer"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Cents"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_cents"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txtCentsViewer"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_cents"/>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center|top"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOctaveViewer"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/font_size_note"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNoteViewer"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/font_size_note"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgSignViewer"
+            android:layout_margin="3dp"
+            />
+
+    </LinearLayout>
+
+
+
+
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/numbers"
+            android:id="@+id/imgNumbers"
+            android:scaleType="center"
+            />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:src="@drawable/aghrabe"
+            android:scaleType="center"
+            android:id="@+id/imggauge"
+            android:layout_centerInParent="true"
+            />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:id="@+id/imgCorrectnessViewer"
+        android:layout_centerInParent="true"
+        />
+
+
+</RelativeLayout>
+<!-- From: file:/C:/Projects/sout_azin/_TUNER_VERSIONS_SRC/TurkishTunerOriginal/app/src/main/res/layout/main.xml -->

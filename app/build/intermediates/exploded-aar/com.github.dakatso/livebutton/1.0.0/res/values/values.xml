@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="livebutton"><attr format="dimension" name="pressedHeight"/><attr format="dimension" name="normalHeight"/><attr format="color" name="backgroundColor"/><attr format="color" name="shadowColor"/><attr format="dimension" name="corners"/></declare-styleable>
+    <!-- From: file:/D:/Android/workspace/LiveButton/library/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">LiveButton</string>
+</resources>

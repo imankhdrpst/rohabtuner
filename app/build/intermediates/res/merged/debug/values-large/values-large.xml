@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Projects/sout_azin/_TUNER_VERSIONS_SRC/TurkishTunerOriginal/app/src/main/res/values-large/dimens.xml -->
+    <eat-comment/>
+    <dimen name="font_size_all">10dp</dimen>
+    <dimen name="font_size_cents">30dp</dimen>
+    <dimen name="font_size_note">90dp</dimen>
+    <dimen name="font_size_setting_note">48dp</dimen>
+    <dimen name="gauge_spin">17dp</dimen>
+    <dimen name="setting_items_padding">20dp</dimen>
+    <dimen name="share_button_height">45dp</dimen>
+    <dimen name="share_button_margin">10dp</dimen>
+    <dimen name="share_button_width">150dp</dimen>
+    <dimen name="start_curve">7dp</dimen>
+</resources>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/holo_blue_light"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/setting_items_padding"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|left"
+                        android:text="Base Frequency : "
+
+                        />
+
+                    <NumberPicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/numRefrenceFrequency"
+                        android:editable="false"
+                        >
+
+                    </NumberPicker>
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Base Bemols :        "/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/layBemolSelection"
+                        android:orientation="vertical"
+                        android:background="@drawable/dottedborder"
+                        android:weightSum="2"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/bemol1"
+                                android:layout_weight="1"
+                                android:src="@drawable/bemol"
+                                android:layout_margin="@dimen/share_button_margin"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/bemol2"
+                                android:layout_weight="1"
+                                android:src="@drawable/bemol"
+                                android:layout_margin="@dimen/share_button_margin"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_weight="1"
+                            android:weightSum="2">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/bemol3"
+                                android:layout_weight="1"
+                                android:src="@drawable/bemol"
+                                android:layout_margin="@dimen/share_button_margin"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/bemol4"
+                                android:layout_weight="1"
+                                android:src="@drawable/bemol"
+                                android:layout_margin="@dimen/share_button_margin"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!-- bemols holder -->
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Base Note :       "/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/setting_items_padding"
+                        android:id="@+id/lay_base_not"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_base_not_view"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/font_size_setting_note"
+                            android:text="C"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <!--<CheckBox-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="left"-->
+                    <!--android:text="Persian Signs or Not ?"-->
+                    <!--android:id="@+id/chk_persian_signs"-->
+                    <!--/>-->
+
+
+
+                <com.andexert.library.RippleView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fb_ripple"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    rv_centered="true"
+                    android:layout_margin="@dimen/share_button_margin"
+                    ripple:rv_zoom="true"
+                    ripple:rv_centered="true"
+                    ripple:rv_type="rectangle"
+                    ripple:rv_color ="#ff5454"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <com.facebook.share.widget.ShareButton
+                            android:layout_width="@dimen/share_button_width"
+                            android:layout_height="@dimen/share_button_height"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/facebook_share_button"/>
+                    </RelativeLayout>
+
+
+
+
+                </com.andexert.library.RippleView>
+
+                <com.andexert.library.RippleView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_ripple"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/share_button_margin"
+
+                    rv_centered="true"
+                    ripple:rv_zoom="true"
+                    ripple:rv_centered="true"
+                    ripple:rv_type="rectangle"
+                    ripple:rv_color ="#ff5454"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_width="@dimen/share_button_width"
+                            android:layout_height="@dimen/share_button_height"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/White"
+                            android:background="@color/ForestGreen"
+                            android:id="@+id/shareViaText"
+                            android:text="Share Via Text"/>
+                    </RelativeLayout>
+
+
+                </com.andexert.library.RippleView>
+
+
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/C:/Projects/sout_azin/_TUNER_VERSIONS_SRC/TurkishTunerOriginal/app/src/main/res/layout/settings_activity.xml -->

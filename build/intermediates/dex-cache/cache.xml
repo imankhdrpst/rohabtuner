@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\New folder\TurkishTunerOriginal\TurkishTunerOriginal\app\libs\TarsosDSP-Android-latest.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e117075d275a45da96046e4efb3ca0a30e60b809">
+        <dex dex="C:\New folder\TurkishTunerOriginal\TurkishTunerOriginal\app\build\intermediates\pre-dexed\persian\release\TarsosDSP-Android-latest_ffd1c50d94999c46ab885b270faddee751836f98.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\User\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="C:\New folder\TurkishTunerOriginal\TurkishTunerOriginal\app\build\intermediates\pre-dexed\persian\release\support-annotations-22.2.1_6d90bce966f064a8e685230c71910ff0dabb9a41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\User\.android\build-cache\1e0ba805126d23de12814dba44b8999c88744c40\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ee17feb34ce104bc17d1a1e64346d7f779ebb066">
+        <dex dex="C:\New folder\TurkishTunerOriginal\TurkishTunerOriginal\app\build\intermediates\pre-dexed\persian\release\classes_4ad735f99c73f57acdcf72ee03af1dc6ebf27787.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\User\.android\build-cache\66a1eaf134df1647ac852957908e6f1b2c1a4a79\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="381fcb7c05099512a888a3e9aff7d313ebe2f1de">
+        <dex dex="C:\New folder\TurkishTunerOriginal\TurkishTunerOriginal\app\build\intermediates\pre-dexed\persian\release\classes_01569f5c5d3acee36e4e28809567f613db11efc0.jar" />
+    </item>
+
+</items>

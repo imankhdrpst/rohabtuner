@@ -1,0 +1,13 @@
+#Sun Jul 23 10:09:41 IRDT 2017
+renamed.3=classes2.dex
+renamed.2=classes3.dex
+renamed.1=classes.dex
+renamed.0=classes4.dex
+base.3=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\classes_4ad735f99c73f57acdcf72ee03af1dc6ebf27787
+base.2=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\support-annotations-22.2.1_6d90bce966f064a8e685230c71910ff0dabb9a41
+base.1=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\classes_01569f5c5d3acee36e4e28809567f613db11efc0
+base.0=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\2\\TarsosDSP-Android-latest_ffd1c50d94999c46ab885b270faddee751836f98
+file.3=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\classes_4ad735f99c73f57acdcf72ee03af1dc6ebf27787\\classes.dex
+file.2=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\support-annotations-22.2.1_6d90bce966f064a8e685230c71910ff0dabb9a41\\classes.dex
+file.1=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\10\\classes_01569f5c5d3acee36e4e28809567f613db11efc0\\classes.dex
+file.0=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\2\\TarsosDSP-Android-latest_ffd1c50d94999c46ab885b270faddee751836f98\\classes.dex
