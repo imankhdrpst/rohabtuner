@@ -335,7 +335,7 @@ public class MyActivity extends Activity {
     }
 
     private void createToneGeneratorDialog() {
-        Dialog dlg = new Dialog(MyActivity.this, R.style.MyDialogTheme);
+        Dialog dlg = new Dialog(MyActivity.this, R.style.TransparentProgressDialog);
         // ظاهر دیاپازون از این لایوت خوانده می شود
         dlg.setContentView(R.layout.tone_generator);
         dlg.setCancelable(true);
@@ -513,7 +513,7 @@ public class MyActivity extends Activity {
     }
 
     private Dialog createAndShowDemoDialog() {// برای نمایش دیالوگ راهنمای برنامه است
-        final Dialog dlg = new Dialog(MyActivity.this, R.style.MyDialogTheme);
+        final Dialog dlg = new Dialog(MyActivity.this, R.style.TransparentProgressDialog);
         dlg.setContentView(R.layout.help_view);
         dlg.setCancelable(true);
 
@@ -532,7 +532,16 @@ public class MyActivity extends Activity {
             public void onClick(View view) {
 
                 final String appPackageName = BuildConfig.PAID_VERSION; // getPackageName() from Context or Activity object
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                if (BuildConfig.PLATFORM.equals("play")) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+                else
+                {
+                    Intent intent = new Intent(Intent.ACTION_EDIT);
+                    intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
+                    intent.setPackage("com.farsitel.bazaar");
+                    startActivity(intent);
+                }
 
 
                 // اگر درخواست عدم نمایش راهنما زده شود

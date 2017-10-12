@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemobazar\\release\\layout\\signal_view.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\signal_view.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemobazar\\release\\layout\\tone_generator.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\tone_generator.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemobazar\\release\\layout\\main.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemobazar\\release\\layout\\help_view.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\help_view.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemobazar\\release\\layout\\settings_activity.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\settings_activity.xml"
+    }
+]

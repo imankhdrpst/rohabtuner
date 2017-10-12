@@ -12,6 +12,14 @@
         "source": "C:\\Users\\User\\.android\\build-cache\\2784ed35187ac0b7a4c15caee2e58ac7162286fb\\output\\res\\layout\\messenger_button_send_white_small.xml"
     },
     {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\help_view.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\help_view.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\tone_generator.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\tone_generator.xml"
+    },
+    {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\notification_template_media.xml",
         "source": "C:\\Users\\User\\.android\\build-cache\\05115b8d87f11de20b7468a9e2d7c3f4368a3d43\\output\\res\\layout\\notification_template_media.xml"
     },
@@ -30,6 +38,10 @@
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
         "source": "C:\\Users\\User\\.android\\build-cache\\05115b8d87f11de20b7468a9e2d7c3f4368a3d43\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\settings_activity.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\settings_activity.xml"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
@@ -102,6 +114,10 @@
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\abc_alert_dialog_title_material.xml",
         "source": "C:\\Users\\User\\.android\\build-cache\\05115b8d87f11de20b7468a9e2d7c3f4368a3d43\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\main.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\main.xml"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\abc_action_bar_up_container.xml",
@@ -182,6 +198,10 @@
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\help_view.xml",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\layout\\help_view.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\signal_view.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\layout\\signal_view.xml"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\layout\\abc_popup_menu_item_layout.xml",

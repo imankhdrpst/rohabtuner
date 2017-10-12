@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/layout"
+    android:background="@drawable/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".MainActivity"
+        >
+
+    <!--<ImageView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:src="@drawable/mainback"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_centerInParent="true"/>-->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:weightSum="3"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center|top"
+            android:layout_centerHorizontal="true">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/txtFreqViewer"
+                android:textColor="@color/Black"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/font_size_cents"/>
+
+
+
+        </LinearLayout><!-- freq viewer-->
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center|top"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtOctaveViewer"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_note"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtNoteViewer"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_note"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgSignViewer"
+                android:layout_margin="3dp"
+                />
+
+        </LinearLayout><!-- octave viewer-->
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/layCentsViewer"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Cents"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_cents"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txtCentsViewer"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/font_size_cents"/>
+
+
+
+        </LinearLayout><!-- cents viewer -->
+
+
+    </LinearLayout>
+
+
+
+
+
+
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/numbers"
+            android:id="@+id/imgNumbers"
+        android:tint="@color/Black"
+            android:scaleType="center"
+            />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:src="@drawable/aghrabe"
+            android:scaleType="center"
+            android:id="@+id/imggauge"
+            android:layout_centerInParent="true"
+            />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:id="@+id/imgCorrectnessViewer"
+        android:layout_centerInParent="true"
+        />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:weightSum="2"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        >
+
+        <ru.katso.livebutton.LiveButton
+            android:id="@+id/btnToneGenerator"
+            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Tone Generator"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            livebutton:corners="4dp"
+            livebutton:normalHeight="6dp"
+            livebutton:pressedHeight="2dp"
+            livebutton:backgroundColor="@color/DarkGreen"
+            livebutton:shadowColor="@color/Green"/>
+
+        <ru.katso.livebutton.LiveButton
+            android:id="@+id/btnSettings"
+            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Tuner Setting"
+            android:textColor="#ffffff"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            livebutton:corners="4dp"
+            livebutton:normalHeight="6dp"
+            livebutton:pressedHeight="2dp"
+            livebutton:backgroundColor="@color/RoyalBlue"
+            livebutton:shadowColor="@color/SteelBlue"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Quarter Tone Tuner/Tone Generator. SoutAzin "
+            android:textColor="@color/MidnightBlue"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sa"
+            android:tint="@color/MidnightBlue"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</RelativeLayout>

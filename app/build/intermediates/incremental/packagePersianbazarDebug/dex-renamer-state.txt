@@ -1,0 +1,4 @@
+#Thu Oct 12 12:48:11 IRST 2017
+base.0=C\:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persianbazar\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persianbazar\\debug\\folders\\1000\\1f\\main\\classes.dex

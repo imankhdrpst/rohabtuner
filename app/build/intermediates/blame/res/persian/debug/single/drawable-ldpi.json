@@ -1,11 +1,15 @@
 [
     {
-        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\tunericon.png",
-        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\tunericon.png"
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol1.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\bemol1.png"
     },
     {
-        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol2.png",
-        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\bemol2.png"
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\aghrabe.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\aghrabe.png"
+    },
+    {
+        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\tunericon.png",
+        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\tunericon.png"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\numbers.png",
@@ -16,6 +20,46 @@
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\logo.png"
     },
     {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese3.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\diese3.png"
+    },
+    {
+        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese.png",
+        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\diese.png"
+    },
+    {
+        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese3.png",
+        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\diese3.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\tunericon.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\tunericon.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\logo.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\logo.png"
+    },
+    {
+        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\sori.png",
+        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\sori.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\sa.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\sa.png"
+    },
+    {
+        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol2.png",
+        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\bemol2.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\correct.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\correct.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\wrong.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\wrong.png"
+    },
+    {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\wrong.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\wrong.png"
     },
@@ -24,32 +68,40 @@
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\back.png"
     },
     {
-        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese.png",
-        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\diese.png"
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\koron.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\koron.png"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\aghrabe.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\aghrabe.png"
     },
     {
-        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese3.png",
-        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\diese3.png"
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol2.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\bemol2.png"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\correct.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\correct.png"
     },
     {
-        "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\sori.png",
-        "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\sori.png"
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\bemol.png"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\koron.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\koron.png"
     },
     {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\numbers.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\numbers.png"
+    },
+    {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\sa.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\sa.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\sori.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\sori.png"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol.png",
@@ -58,5 +110,13 @@
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\bemol1.png",
         "source": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\src\\main\\res\\drawable-ldpi\\bemol1.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\back.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\back.png"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable-ldpi\\diese.png",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable-ldpi\\diese.png"
     }
 ]

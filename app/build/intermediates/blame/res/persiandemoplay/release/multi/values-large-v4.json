@@ -1,0 +1,216 @@
+[
+    {
+        "outputFile": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\incremental\\mergePersiandemoplayReleaseResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 44,
+                    "endOffset": 95
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 274,
+                        "endColumn": 44,
+                        "endOffset": 314
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 100,
+                    "endColumn": 46,
+                    "endOffset": 142
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 415,
+                        "endColumn": 46,
+                        "endOffset": 457
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 147,
+                    "endColumn": 45,
+                    "endOffset": 188
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 368,
+                        "endColumn": 45,
+                        "endOffset": 409
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 193,
+                    "endColumn": 53,
+                    "endOffset": 242
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 508,
+                        "endColumn": 53,
+                        "endOffset": 557
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 247,
+                    "endColumn": 46,
+                    "endOffset": 289
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 320,
+                        "endColumn": 46,
+                        "endOffset": 362
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 294,
+                    "endColumn": 41,
+                    "endOffset": 331
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 1,
+                        "startColumn": 4,
+                        "startOffset": 17,
+                        "endColumn": 41,
+                        "endOffset": 54
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 336,
+                    "endColumn": 52,
+                    "endOffset": 384
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 218,
+                        "endColumn": 52,
+                        "endOffset": 266
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 389,
+                    "endColumn": 50,
+                    "endOffset": 435
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 114,
+                        "endColumn": 50,
+                        "endOffset": 160
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 440,
+                    "endColumn": 50,
+                    "endOffset": 486
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 166,
+                        "endColumn": 50,
+                        "endOffset": 212
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 491,
+                    "endColumn": 50,
+                    "endOffset": 537
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 62,
+                        "endColumn": 50,
+                        "endOffset": 108
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 542,
+                    "endColumn": 41,
+                    "endOffset": 579
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\values-large\\dimens.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 463,
+                        "endColumn": 41,
+                        "endOffset": 500
+                    }
+                }
+            }
+        ]
+    }
+]

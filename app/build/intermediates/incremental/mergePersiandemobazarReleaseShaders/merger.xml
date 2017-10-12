@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\main\shaders"/></dataSet><dataSet config="persiandemobazar"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\persiandemobazar\shaders"/></dataSet><dataSet config="release"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\release\shaders"/></dataSet><dataSet config="persiandemobazarRelease"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\persiandemobazarRelease\shaders"/></dataSet></merger>

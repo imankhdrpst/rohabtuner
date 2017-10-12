@@ -40,6 +40,10 @@
         "source": "C:\\Users\\User\\.android\\build-cache\\05115b8d87f11de20b7468a9e2d7c3f4368a3d43\\output\\res\\drawable\\abc_vector_test.xml"
     },
     {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable\\dialog_back.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable\\dialog_back.xml"
+    },
+    {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable\\com_facebook_button_like_background.xml",
         "source": "C:\\Users\\User\\.android\\build-cache\\2784ed35187ac0b7a4c15caee2e58ac7162286fb\\output\\res\\drawable\\com_facebook_button_like_background.xml"
     },
@@ -178,6 +182,10 @@
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable\\abc_textfield_search_material.xml",
         "source": "C:\\Users\\User\\.android\\build-cache\\05115b8d87f11de20b7468a9e2d7c3f4368a3d43\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable\\dottedborder.xml",
+        "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\drawable\\dottedborder.xml"
     },
     {
         "merged": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\res\\merged\\persian\\debug\\drawable\\messenger_button_blue_bg_selector.xml",

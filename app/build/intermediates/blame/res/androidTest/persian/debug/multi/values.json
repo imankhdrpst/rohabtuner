@@ -1,5 +1,29 @@
 [
     {
+        "outputFile": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\incremental\\mergePersianDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 71,
+                    "endOffset": 122
+                },
+                "from": {
+                    "file": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\generated\\res\\resValues\\androidTest\\persian\\debug\\values\\generated.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 168,
+                        "endColumn": 71,
+                        "endOffset": 235
+                    }
+                }
+            }
+        ]
+    },
+    {
         "outputFile": "C:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\incremental\\mergePersianDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
