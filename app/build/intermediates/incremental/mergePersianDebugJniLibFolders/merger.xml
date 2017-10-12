@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\main\jniLibs"/></dataSet><dataSet config="persian"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\persian\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\debug\jniLibs"/></dataSet><dataSet config="persianDebug"><source path="C:\INPIN Resources\rohabtuner\rohabtuner\app\src\persianDebug\jniLibs"/></dataSet></merger>

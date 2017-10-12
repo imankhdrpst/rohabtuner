@@ -1,4 +1,0 @@
-#Sun Jul 23 10:09:42 IRDT 2017
-base.0=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\5\\slice_9
-renamed.0=classes.dex
-file.0=C\:\\New folder\\TurkishTunerOriginal\\TurkishTunerOriginal\\app\\build\\intermediates\\transforms\\dex\\persian\\debug\\folders\\1000\\5\\slice_9\\classes.dex
