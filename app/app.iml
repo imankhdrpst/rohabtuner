@@ -41,13 +41,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplayDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplayDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplayDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/persiandemoplay/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/persiandemoplay/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/persiandemoplay/debug" isTestSource="true" generated="true" />
@@ -55,6 +48,13 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/persiandemoplay/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/persiandemoplay/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/persiandemoplay/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testPersiandemoplayDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplay/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplay/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/persiandemoplay/assets" type="java-resource" />
