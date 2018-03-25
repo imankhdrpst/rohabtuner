@@ -221,7 +221,7 @@ public class MyActivity extends Activity {
                 PrefrencesHelper.getInstance().getSampleRate(), 2048, pdh);
         dispatcher.addAudioProcessor(p);
 
-        mainThread = new Thread(dispatcher);
+        mainThread = new Thread(dispatcher, "audioRecorder");
         // به محض اتمام راه اندازی های اولیه ، ماشین تصمیم گیری را شروع کن
         mainThread.start();
     }
