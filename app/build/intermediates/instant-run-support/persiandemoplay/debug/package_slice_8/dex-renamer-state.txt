@@ -1,0 +1,4 @@
+#Sun Dec 03 12:19:55 IRST 2017
+base.0=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\5\\slice_8
+renamed.0=classes.dex
+file.0=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\5\\slice_8\\classes.dex
