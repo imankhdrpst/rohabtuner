@@ -25,8 +25,8 @@ android {
             resValue "string", "app_name", "Turkish Tuner Demo"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
 
         turkishplay {
@@ -38,8 +38,8 @@ android {
             resValue "string", "app_name", "Turkish Tuner"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
 
         persiandemoplay {
@@ -51,8 +51,8 @@ android {
             resValue "string", "app_name", "Persian Tuner Demo"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
         persianplay {
             applicationId "com.soutazin.persiantunernew"
@@ -63,8 +63,8 @@ android {
             resValue "string", "app_name", "Persian Tuner"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
         turkishdemobazar {
             applicationId "com.soutazin.turkishtunerdemo"
@@ -75,8 +75,8 @@ android {
             resValue "string", "app_name", "Turkish Tuner Demo"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
 
         turkishbazar {
@@ -88,8 +88,8 @@ android {
             resValue "string", "app_name", "Turkish Tuner"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
 
         persiandemobazar {
@@ -101,8 +101,8 @@ android {
             resValue "string", "app_name", "Persian Tuner Demo"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
         persianbazar {
             applicationId "com.soutazin.persiantuner"
@@ -113,8 +113,8 @@ android {
             resValue "string", "app_name", "Persian Tuner"
             minSdkVersion 15
             targetSdkVersion 15
-            versionCode 5
-            versionName "1.5"
+            versionCode 6
+            versionName "1.6"
         }
     }
     buildTypes {

@@ -192,7 +192,7 @@ public class SettingsActivity extends Activity {
 
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                final Intent intent = sharingIntent.putExtra(Intent.EXTRA_TEXT, "Quarter Tone Tuner by SoutAzin. Persian Version. Download from : " + "https://play.google.com/store/apps/details?id=" + getPackageName());
+                final Intent intent = sharingIntent.putExtra(Intent.EXTRA_TEXT, "Quarter Tone Tuner by SoutAzin. Persian Version. Download from Cafe Bazaar or Google Play");
                 startActivity(Intent.createChooser(intent, "Share Rohab"));
             }
         });

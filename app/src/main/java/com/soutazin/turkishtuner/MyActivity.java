@@ -542,7 +542,10 @@ public class MyActivity extends Activity {
                     intent.setPackage("com.farsitel.bazaar");
                     startActivity(intent);
                 }
-
+//                Intent intent = new Intent(Intent.ACTION_EDIT);
+//                intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
+//                intent.setPackage("com.farsitel.bazaar");
+//                startActivity(intent);
 
                 // اگر درخواست عدم نمایش راهنما زده شود
 
