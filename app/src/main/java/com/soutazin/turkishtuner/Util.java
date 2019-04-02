@@ -12,7 +12,6 @@ public class Util{
     public static Integer nearInclusive(final float[] array, final float value) {
         Integer i = null;
         int idx = binarySearch(array, value);
-//        Log.d("SATUNER", "near Incluseive binary seach first index : " + idx + "---- for value : " + value);
         if (idx < 0) {
             idx = -(idx) - 1;
             if (idx == 0 || idx >= array.length) {
@@ -22,8 +21,6 @@ public class Util{
                 // Find nearest point
                 double d0 = Math.abs(array[idx - 1] - value);
                 double d1 = Math.abs(array[idx] - value);
-//                Log.d("SATUNER", "difference from up =  " + d0 + " ---- , ---- difference from down = " + d1);
-//                Log.d("SATUNER", "index values :  --- down : " + array[idx] + "---- up : " + array[idx - 1]);
 
                 i = (d0 <= d1) ? idx - 1 : idx;
             }

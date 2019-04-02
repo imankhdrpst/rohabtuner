@@ -151,37 +151,6 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        // تنظیمات به اشتراک گذاری در فیسبوک در اینجا انجام می شود
-//        callbackManager = CallbackManager.Factory.create();
-//        shareDialog = new ShareDialog(this);
-//        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-//
-//            @Override
-//            public void onSuccess(Sharer.Result result) {
-//
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException e) {
-//
-//            }
-//        });
-        // محتوای به اشتراک گذاری در فیسبوک :
-//        ShareLinkContent content = new ShareLinkContent.Builder()
-//                .setContentUrl(Uri.parse("https://www.google.com"))
-//                .setContentTitle("Sout Azin Quarter Tone Tuner")
-//                .setImageUrl(Uri.parse("http://www.soutazin.ir/images/hdr-SA-logo.gif"))
-//                .setContentDescription("Download From Play Store")
-//                .build();
-//
-//        ShareButton shareButton = (ShareButton) findViewById(R.id.facebook_share_button);
-//        shareButton.setShareContent(content);
-//
 
 // تنظیمات به اشتراک گذاری متنی در اینجا انجام می شود
         Button buttonShare = (Button) findViewById(R.id.shareViaText);

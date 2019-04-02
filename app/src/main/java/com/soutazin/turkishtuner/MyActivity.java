@@ -1,9 +1,10 @@
 package com.soutazin.turkishtuner;
 
-import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
@@ -20,7 +21,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,18 +28,21 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.AudioEvent;
-import be.tarsos.dsp.AudioProcessor;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
 
 public class MyActivity extends Activity {
@@ -52,35 +55,19 @@ public class MyActivity extends Activity {
     private final int sampleRate = 8000; // ویژه دیاپازون
     private final int numSamples = duration * sampleRate; // ویژه دیاپازون
     private final double sample[] = new double[numSamples]; // ویژه دیاپازون
-
     private final byte generatedSnd[] = new byte[2 * numSamples];
-
     Handler handler = new Handler();
-    //    static float[] allFrequencies = new float[289]; // تمام فرکانس ها در این آرایه قرار می گیرند
     static float[] freqInThisRefrence = new float[289];
     private static int MAX_TOKEN_RECOGNIZED = 3; // میزان دقت تیونر در تصمیم گیری ... هرچه بزرگتر باشد تصمیم دقیق تر است و البته نتیجه گیری سخت تر
     private static int countOfThisFrequency = 0;
     private static int lastIndexFound = 0;
     private ImageView imgGauge; // اندیکاتر
-    NumberPicker refrencePicker; // تغییر فرکانس پایه در تنظیمات
-    LinearLayout laySelectBemol; // تغییر بمل در تنظیمات
-    LinearLayout laySelectBaseNote; // تغییر نت پایه در تنظیمات
-    TextView txtBaseNote;
-    ImageView imgBemol1;
-    ImageView imgBemol2;
-    ImageView imgBemol3;
-    ImageView imgBemol4;
-
     private boolean lock = false;
-
     private static final int OCTAVE = 24;
-
     // علامت ها و نت ها در 24 حالت اساسی
-
     private static final String notes[] =
             {"C", "D", "E", "F", "G", "A", "B"};
     private static int tg_note_index = 0;
-
     private static final String notes_C[] =
             {"C", "C", "C", "D", "D", "D",
                     "D", "E", "E", "E", "F", "F", "F", "G", "G", "G", "G", "A", "A", "A", "A", "B", "B", "B"};
@@ -88,7 +75,6 @@ public class MyActivity extends Activity {
             {"", "♯³", "♯", "♭²", "", "♯³",
                     "♯", "♭²", "", "♯³", "", "♯³", "♯", "♭²", "", "♯³", "♯", "♭²"
                     , "", "♯³", "♯", "♭²", "", "♯³"};
-
     private static final String notes_Bb[] =
             {"D", "D", "D", "E", "E", "E",
                     "F", "F", "F", "G", "G", "G", "G", "A", "A", "A", "A", "B", "B", "B", "C", "C", "C", "C"};
@@ -96,7 +82,6 @@ public class MyActivity extends Activity {
             {"", "♯³", "\u266F", "\u266D²", "", "\u266F³",
                     "", "♯³", "♯", "\u266F³", "", "\u266F³", "\u266F", "\u266D²", "", "\u266F³", "\u266F", "\u266D²"
                     , "", "\u266F³", "", "♯³", "♯", "♭²"};
-
     private static final String notes_F[] =
             {"G", "G", "G", "A", "A", "A",
                     "A", "B", "B", "B", "C", "C", "C", "D", "D", "D", "D", "E", "E", "E", "F", "F", "F", "G"};
@@ -104,8 +89,6 @@ public class MyActivity extends Activity {
             {"", "\u266F³", "\u266F", "\u266D²", "", "\u266F³",
                     "\u266F", "\u266D²", "", "\u266F³", "", "\u266F³", "\u266F", "\u266D²", "", "\u266F³", "\u266F", "\u266D²"
                     , "", "\u266F³", "", "♯³", "♯", "\u266F³"};
-
-
     private static final String notes_Eb[] =
             {"A", "A", "A", "B", "B", "B",
                     "C", "C", "C", "D", "D", "D", "D", "E", "E", "E", "F", "F", "F", "G", "G", "G", "G", "A"};
@@ -113,7 +96,6 @@ public class MyActivity extends Activity {
             {"", "\u266F³", "\u266F", "\u266D²", "", "\u266F³",
                     "", "♯³", "♯", "♭²", "", "\u266F³", "\u266F", "\u266D²", "", "\u266F³", "", "♯³"
                     , "♯", "\u266F³", "", "♯³", "♯", "\u266F³"};
-
     int width, height;
     private float _pitchInHertz;
     private int _indexOfNearest;
@@ -122,9 +104,7 @@ public class MyActivity extends Activity {
     private double _cents;
     private int gaugeSpinInteger;
     private Thread mainThread = null;
-    private CheckBox chkPersian;
     private float tg_frequency = 0.0f;
-    private Dialog dlgHelpView = null;
     private TextView txtOctaveViewer;
     private TextView txtCentsViewer;
     private TextView txtNoteViewer;
@@ -135,6 +115,9 @@ public class MyActivity extends Activity {
     private TextView txtFreqViewer;
     private LiveButton btnSetting;
     private LiveButton btnToneGenerator;
+    private Disposable disposable = null;
+    private AudioDispatcher dispatcher = null;
+    private PitchProcessor p = null;
 
     @Override
     public void onResume() {
@@ -144,104 +127,109 @@ public class MyActivity extends Activity {
             initFloats();
         }
         startTuner();
+
     }
 
-    private void startTuner()
+    private void detectPitch(PitchDetectionResult result)
     {
-
-        // راه اندازی اولیه نخ بند مربوط به تیونر
-        AudioDispatcher dispatcher = AudioDispatcherFactory
-                .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
-
-// این هندلر برای دریافت فرکانس ورودی راه اندازی می شود
-        PitchDetectionHandler pdh = new PitchDetectionHandler() {
-            @Override
-            public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
-                try {
-
-                    _pitchInHertz = result.getPitch();
-
-                    if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
+        try {
+            _pitchInHertz = result.getPitch();
+            if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
+                _pitchInHertz = 0;
+                _indexOfNearest = 0;
+                _cents = 0;
+                _nearest = 0;
+                _pitched = false;
+                lastIndexFound = 0;
+                countOfThisFrequency = 0;
+            } else {
+                // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
+                _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
+                if (_indexOfNearest == lastIndexFound) { // اگر آخرین نتی که پیدا کردی تکراری است
+                    countOfThisFrequency++;
+                    Log.d("SATUNER "+ BuildConfig.TYPE, "pitch foiund : " + _pitchInHertz + " , nearest index found : " + _indexOfNearest);
+                    if (countOfThisFrequency >= MAX_TOKEN_RECOGNIZED) { // اگر این نت بیش از 3 بار تکرار شده است پس درست است
+                        _nearest = /*allFrequencies*/freqInThisRefrence[_indexOfNearest]/*[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414]*/;
+                        Log.d("SATUNER "+ BuildConfig.TYPE, " nearest pitch found : " + _nearest);
+                        // سنت را محاسبه کن
+                        _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
+                        _pitched = _cents <= 5.0 && _cents >= -5.0;
+                    } else {
                         _pitchInHertz = 0;
                         _indexOfNearest = 0;
                         _cents = 0;
                         _nearest = 0;
                         _pitched = false;
-                        lastIndexFound = 0;
-                        countOfThisFrequency = 0;
-                    } else {
-                        // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
+                    }
+                } else {
+                    countOfThisFrequency = 0;
+                    lastIndexFound = _indexOfNearest;
+                    _indexOfNearest = 0;
+                    _cents = 0;
+                }
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
+                        // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
+                        startDecision(_pitchInHertz, _indexOfNearest, _cents);
+                    }
+                }
+            });
+        } catch (Exception ex) {
+        }
+    }
 
-                        _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
-                        if (_indexOfNearest == lastIndexFound) { // اگر آخرین نتی که پیدا کردی تکراری است
-                            countOfThisFrequency++;
-                            Log.d("SATUNER", "pitch foiund : " + _pitchInHertz + " , nearest index found : " + _indexOfNearest);
-                            if (countOfThisFrequency >= MAX_TOKEN_RECOGNIZED) { // اگر این نت بیش از 3 بار تکرار شده است پس درست است
-                                _nearest = /*allFrequencies*/freqInThisRefrence[_indexOfNearest]/*[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414]*/;
-                                Log.d("SATUNER", " nearest pitch found : " + _nearest);
-                                // سنت را محاسبه کن
-                                _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
-                                _pitched = _cents <= 5.0 && _cents >= -5.0;
-
-                            } else {
-                                _pitchInHertz = 0;
-                                _indexOfNearest = 0;
-                                _cents = 0;
-                                _nearest = 0;
-                                _pitched = false;
-                            }
-                        } else {
-                            countOfThisFrequency = 0;
-                            lastIndexFound = _indexOfNearest;
-                            _indexOfNearest = 0;
-                            _cents = 0;
-                        }
-
+    private void startTuner()
+    {
+        // راه اندازی اولیه نخ بند مربوط به تیونر
+        dispatcher = AudioDispatcherFactory
+                .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
+        // این هندلر برای دریافت فرکانس ورودی راه اندازی می شود
+        PitchDetectionHandler pdh = new PitchDetectionHandler() {
+            @Override
+            public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
+                Single.just(result)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<PitchDetectionResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
                     }
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
-                                // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
-                                startDecision(_pitchInHertz, _indexOfNearest, _cents);
-                            }
-                        }
-                    });
+                    @Override
+                    public void onSuccess(PitchDetectionResult pitchDetectionResult) {
+                        detectPitch(pitchDetectionResult);
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
 
-                } catch (Exception ex) {
-                    int a = 0;
-                    a++;
-                }
-
+                    }
+                });
             }
         };
-        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN,
+        p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN,
                 PrefrencesHelper.getInstance().getSampleRate(), 2048, pdh);
         dispatcher.addAudioProcessor(p);
 
-        mainThread = new Thread(dispatcher, "audioRecorder");
+        mainThread = new Thread(dispatcher, "audioRecorder" + BuildConfig.TYPE);
         // به محض اتمام راه اندازی های اولیه ، ماشین تصمیم گیری را شروع کن
         mainThread.start();
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // تنظیمات اولیه تیونر
-//        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getActionBar().hide();
-//        getActionBar().setTitle(getResources().getString(R.string.app_name));
         PrefrencesHelper.getInstance().init(getApplicationContext());
-
-
         gaugeSpinInteger = (int) getResources().getDimension(R.dimen.gauge_spin);
-
         android.view.Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -250,9 +238,6 @@ public class MyActivity extends Activity {
 
         // فرکانس ها را بخوان و در آرایه بریز
         initFloats();
-
-//        initCurrentBaseFrequesncyArray();
-
 
         txtOctaveViewer = (TextView) findViewById(R.id.txtOctaveViewer);
         txtCentsViewer = (TextView) findViewById(R.id.txtCentsViewer);
@@ -264,7 +249,6 @@ public class MyActivity extends Activity {
         layCentsViewer = (LinearLayout) findViewById(R.id.layCentsViewer);
         imgcorrectnessView = (ImageView) findViewById(R.id.imgCorrectnessViewer);
 
-
         btnToneGenerator.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,49 +256,33 @@ public class MyActivity extends Activity {
 
             }
         });
-
         btnSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                createSettingDialog();
                 Intent intent = new Intent(MyActivity.this, SettingsActivity.class);
                 startActivity(intent);
 
             }
         });
-
         imgGauge = (ImageView) findViewById(R.id.imggauge);
 
-
-
-
-
-        // بررسی کن اگر راهنما باید نشان داده شود
-//        if (PrefrencesHelper.getInstance().isHelpVisible()) {
-//            (new Handler()).postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//
-////                    createHelpdialog();
-//                }
-//            }, 500);
-//        }
-
     }
-
-//    private void initCurrentBaseFrequesncyArray() {
-//        for (int j = 0; j < 289; j++) {
-//            freqInThisRefrence[j] = /*allFrequencies*/freqInThisRefrence/*[j]*/[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414];
-//        }
-//
-//    }
 
     @Override
     public void onDestroy() { // اگر از برنامه خارج شد
         super.onDestroy();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
         try {
+            disposable.dispose();
             mainThread.interrupt();
             mainThread = null;
+            dispatcher.stop();
+            dispatcher.removeAudioProcessor(p);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -353,14 +321,10 @@ public class MyActivity extends Activity {
         ImageButton btnBemolNote = (ImageButton) dlg.findViewById(R.id.btn_bemol_tone);
         Button btnPlaySound = (Button) dlg.findViewById(R.id.btn_play_tone);
 
-
-        final int baseFrequency = (int) PrefrencesHelper.getInstance().getBaseFrequency();
-
 // نمایش حالت انتخاب شده برای تولید صدا در دیاپازون
         tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
         tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
         tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
-
 
         btnPlaySound.setOnClickListener(new OnClickListener() {
             @Override
@@ -458,10 +422,7 @@ public class MyActivity extends Activity {
 
 
         dlg.show();
-
-
     }
-
 
     void initToneGenerator(final double frqOfTone) {
         // نخ بند مربوط به دیاپازون تعریف می شود
@@ -537,217 +498,40 @@ public class MyActivity extends Activity {
                 }
                 else
                 {
-                    Intent intent = new Intent(Intent.ACTION_EDIT);
-                    intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
-                    intent.setPackage("com.farsitel.bazaar");
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_EDIT);
+                        intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
+                        intent.setPackage("com.farsitel.bazaar");
+                        startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e)
+                    {
+                        new AlertDialog.Builder(MyActivity.this)
+                                .setTitle("Cafe Bazaar Not Found")
+                                .setMessage("Cafe Bazaar is not installed on your device. Please install it first")
+
+                                // Specifying a listener allows you to take an action before dismissing the dialog.
+                                // The dialog is automatically dismissed when a dialog button is clicked.
+                                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Continue with delete operation
+                                    }
+                                })
+
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-//                Intent intent = new Intent(Intent.ACTION_EDIT);
-//                intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
-//                intent.setPackage("com.farsitel.bazaar");
-//                startActivity(intent);
 
-                // اگر درخواست عدم نمایش راهنما زده شود
-
-//                PrefrencesHelper.getInstance().setHelpVisible(false);
                 dlg.dismiss();
             }
         });
 
-
         return dlg;
     }
-
-
-//    private void createSettingDialog() {
-//
-//        // دیالوگ تنظیمات در اینا ساخته می شود
-//        Dialog dlg = new Dialog(MyActivity.this, R.style.MyDialogTheme);
-//        dlg.setContentView(R.layout.settings_activity);
-//        dlg.setCancelable(true);
-//
-//
-//        RippleView rippleFB = (RippleView) dlg.findViewById(R.id.fb_ripple);
-//        RippleView rippleText = (RippleView) dlg.findViewById(R.id.text_ripple);
-//
-//
-//        refrencePicker = (NumberPicker) dlg.findViewById(R.id.numRefrenceFrequency);
-//        refrencePicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-//        refrencePicker.setMinValue(414);
-//        refrencePicker.setMaxValue(454);
-//        refrencePicker.setValue((int) PrefrencesHelper.getInstance().getBaseFrequency());
-//        refrencePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                // فرکانس انتخابی را در دستگاه ذخیره کن
-//                PrefrencesHelper.getInstance().setBaseFrequency(newVal);
-//                initFloats();
-////                initCurrentBaseFrequesncyArray();
-//
-//            }
-//        });
-//
-//        txtBaseNote = (TextView) dlg.findViewById(R.id.txt_base_not_view);
-//        imgBemol1 = (ImageView) dlg.findViewById(R.id.bemol1);
-//        imgBemol2 = (ImageView) dlg.findViewById(R.id.bemol2);
-//        imgBemol3 = (ImageView) dlg.findViewById(R.id.bemol3);
-//        imgBemol4 = (ImageView) dlg.findViewById(R.id.bemol4);
-//        // تنظیم نیم گرده ها
-//        if (PrefrencesHelper.getInstance().getBaseBemol().length() > 4) {
-//            PrefrencesHelper.getInstance().setBaseBemol("");
-//
-//        }
-//        if (PrefrencesHelper.getInstance().getBaseBemol().length() == 0) {
-//            imgBemol1.setVisibility(View.INVISIBLE);
-//            imgBemol2.setVisibility(View.INVISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 1) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.INVISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 2) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 3) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.VISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 4) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.VISIBLE);
-//            imgBemol4.setVisibility(View.VISIBLE);
-//        }
-//
-//
-//        laySelectBemol = (LinearLayout) dlg.findViewById(R.id.layBemolSelection);
-//        laySelectBemol.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // بصورت چرخشی ربع پرده را تغییر بده
-//                PrefrencesHelper.getInstance().setBaseBemol("b" + PrefrencesHelper.getInstance().getBaseBemol());
-//                if (PrefrencesHelper.getInstance().getBaseBemol().length() > 4) {
-//                    PrefrencesHelper.getInstance().setBaseBemol("");
-//
-//                }
-//                if (PrefrencesHelper.getInstance().getBaseBemol().length() == 0) {
-//                    imgBemol1.setVisibility(View.INVISIBLE);
-//                    imgBemol2.setVisibility(View.INVISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 1) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.INVISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 2) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 3) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.VISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 4) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.VISIBLE);
-//                    imgBemol4.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//        txtBaseNote.setText(PrefrencesHelper.getBaseNote());
-//
-//        laySelectBaseNote = (LinearLayout) dlg.findViewById(R.id.lay_base_not);
-//        laySelectBaseNote.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // نت پایه را تغییر بده و در دستگاه ذخیره کن
-//                String bN = PrefrencesHelper.getInstance().getBaseNote();
-//                String nextBaseNote = "";
-//                if (bN.equals("C")) {
-//                    nextBaseNote = "B♭";
-//                } else if (bN.endsWith("B♭")) {
-//                    nextBaseNote = "F";
-//                } else if (bN.equals("F")) {
-//                    nextBaseNote = "E♭";
-//                } else if (bN.equals("E♭")) {
-//                    nextBaseNote = "C";
-//                }
-//                PrefrencesHelper.getInstance().setBaseNote(nextBaseNote);
-//                txtBaseNote.setText(nextBaseNote);
-//            }
-//        });
-//
-//        // تنظیمات به اشتراک گذاری در فیسبوک در اینجا انجام می شود
-//        callbackManager = CallbackManager.Factory.create();
-//        shareDialog = new ShareDialog(this);
-//        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-//
-//            @Override
-//            public void onSuccess(Sharer.Result result) {
-//
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException e) {
-//
-//            }
-//        });
-//        // محتوای به اشتراک گذاری در فیسبوک :
-//        ShareLinkContent content = new ShareLinkContent.Builder()
-//                .setContentUrl(Uri.parse("https://www.google.com"))
-//                .setContentTitle("Sout Azin Quarter Tone Tuner")
-//                .setImageUrl(Uri.parse("http://www.soutazin.ir/images/hdr-SA-logo.gif"))
-//                .setContentDescription("Download From Play Store")
-//                .build();
-//
-//        ShareButton shareButton = (ShareButton) dlg.findViewById(R.id.facebook_share_button);
-//        shareButton.setShareContent(content);
-//
-//
-//// تنظیمات به اشتراک گذاری متنی در اینجا انجام می شود
-//        Button buttonShare = (Button) dlg.findViewById(R.id.shareViaText);
-//
-//        rippleText.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-//            @Override
-//            public void onComplete(RippleView rippleView) {
-//
-//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-//                sharingIntent.setType("text/plain");
-//                final Intent intent = sharingIntent.putExtra(Intent.EXTRA_TEXT, "Quarter Tone Tuner by SoutAzin. Persian Version. Download from : " + "https://play.google.com/store/apps/details?id=" + getPackageName());
-//                startActivity(Intent.createChooser(sharingIntent, "Share Rohab"));
-//            }
-//        });
-//// اینجا انتخاب می شود که از علامت های فارسی استفاده شود یا خیر
-////        chkPersian = (CheckBox) dlg.findViewById(R.id.chk_persian_signs);
-////        chkPersian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////            @Override
-////            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-////                 در دستگاه ذخیره کن
-////                PrefrencesHelper.getInstance().setPersian(b);
-////            }
-////        });
-//
-////        chkPersian.setChecked(PrefrencesHelper.getInstance().isPersian());
-//
-//
-//        dlg.show();
-//
-//
-//    }
 
     public void initFloats() {
 
@@ -824,7 +608,7 @@ public class MyActivity extends Activity {
         // نمایش تصمیم
         String note = "", sharp = "", octave = "";
         int additive = PrefrencesHelper.getInstance().getBaseBemol().length() * 2;
-        Log.d("SATUNER", "viewing decision---> index : " + index + " , bemols factor   :" + additive + " , octave :" + OCTAVE);
+//        Log.d("SATUNER", "viewing decision---> index : " + index + " , bemols factor   :" + additive + " , octave :" + OCTAVE);
         if (PrefrencesHelper.getInstance().getBaseNote().startsWith("C")) {
             note = freqHertz <= 0.0f ? "" : notes_C[/*audio.*/(index + additive) % OCTAVE];
             sharp = freqHertz <= 0.0f ? "" : sharps_C[/*audio.*/(index + additive) % OCTAVE];

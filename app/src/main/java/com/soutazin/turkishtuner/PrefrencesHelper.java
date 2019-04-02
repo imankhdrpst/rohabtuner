@@ -20,12 +20,6 @@ public class PrefrencesHelper {
     private static final String SAMPLE_RATE = "samplerate";
     private static final String VIEW_HELP = "helpvisible";
 
-
-
-
-
-
-
     private SharedPreferences mSettings;
     private SharedPreferences.Editor mEditor;
 
@@ -54,10 +48,8 @@ public class PrefrencesHelper {
             mEditor = mSettings.edit();
             baseNote = mSettings.getString(BASE_NOTE, "C"); // C,
             baseBemol = mSettings.getString(BASE_BEMOL, "");
-//            isSensitive = mSettings.getBoolean(IS_SENSITIVE, false);
             baseFrequency =mSettings.getFloat(BASE_FREQUENCY, 440.0f);
             sampleRate = mSettings.getLong(SAMPLE_RATE, 44100);
-//            persian = mSettings.getBoolean(PERSIAN, false);
             helpVisible = mSettings.getBoolean(VIEW_HELP, true);
         }
     }
@@ -80,15 +72,6 @@ public class PrefrencesHelper {
         return helpVisible;
     }
 
-//    public synchronized  void setPersian(boolean b){
-//        mEditor.putBoolean(PERSIAN, b);
-//        mEditor.commit();
-//        persian = b;
-//    }
-//    public boolean isPersian()
-//    {
-//        return false;//  persian; this is th turkish version
-//    }
 
     public synchronized void setBaseNote(String note)
     {
@@ -112,12 +95,6 @@ public class PrefrencesHelper {
         mEditor.putFloat(BASE_FREQUENCY, frequnecy);
         mEditor.commit();
     }
-//    public synchronized  void setIsSensitive(boolean sensitive)
-//    {
-//        mEditor.putBoolean(IS_SENSITIVE, sensitive);
-//        mEditor.commit();
-//        isSensitive = sensitive;
-//    }
     public synchronized  void setSampleRate(long sr)
     {
         sampleRate= sr;
@@ -137,10 +114,6 @@ public class PrefrencesHelper {
     {
         return baseFrequency;
     }
-//    public static boolean isSensitive()
-//    {
-//        return isSensitive;
-//    }
     public static long getSampleRate()
     {
         return  sampleRate;

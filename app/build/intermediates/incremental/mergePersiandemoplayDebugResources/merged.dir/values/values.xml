@@ -202,17 +202,34 @@
     <declare-styleable name="livebutton"><attr format="dimension" name="pressedHeight"/><attr format="dimension" name="normalHeight"/><attr format="color" name="backgroundColor"/><attr format="color" name="shadowColor"/><attr format="dimension" name="corners"/></declare-styleable>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="button_text_size">17sp</dimen>
+    <dimen name="description_text_size">12sp</dimen>
+    <dimen name="font_size_all">10dp</dimen>
+    <dimen name="font_size_cents">30dp</dimen>
+    <dimen name="font_size_note">90dp</dimen>
+    <dimen name="font_size_setting_note">48dp</dimen>
+    <dimen name="font_size_small">20sp</dimen>
+    <dimen name="gauge_spin">17dp</dimen>
+    <dimen name="setting_items_padding">20dp</dimen>
+    <dimen name="share_button_height">45dp</dimen>
+    <dimen name="share_button_margin">10dp</dimen>
+    <dimen name="share_button_width">150dp</dimen>
+    <dimen name="start_curve">7dp</dimen>
     <integer name="def_input">0</integer>
     <integer name="def_ref">440</integer>
     <integer name="max_ref">450</integer>
     <integer name="min_ref">430</integer>
     <string name="action_settings">Settings</string>
     <string name="app_name" translatable="false">Persian Tuner Demo</string>
+    <string name="button_ok">Ok</string>
+    <string name="description">Quarter Tone Tuner/Tone Generator. SoutAzin</string>
     <string name="facebook_app_id">1679142805702950</string>
     <string name="hello_world">Hello world!</string>
     <string name="settings">Settings</string>
     <string name="title_activity_options">Options</string>
     <string name="title_activity_setting">Setting</string>
+    <string name="tone_generator">Tone Generator</string>
+    <string name="tuner_setting">Tuner Setting</string>
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
