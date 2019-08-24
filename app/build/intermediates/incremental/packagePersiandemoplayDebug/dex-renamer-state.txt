@@ -1,7 +1,4 @@
-#Sun Dec 03 12:21:15 IRST 2017
-base.0=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\10000\\instant-run_0775478aee40417ec62d952bc1df2618c14305a7
-renamed.1=classes2.dex
+#Thu Aug 16 10:01:30 IRDT 2018
+base.0=C\:\\Projects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
-file.1=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\10000\\instant-run-bootstrap_03ec64c2d81ee7ca626be685b454a0c86800fdc9\\classes.dex
-base.1=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\10000\\instant-run-bootstrap_03ec64c2d81ee7ca626be685b454a0c86800fdc9
-file.0=C\:\\Users\\negin26\\StudioProjects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\10000\\instant-run_0775478aee40417ec62d952bc1df2618c14305a7\\classes.dex
+file.0=C\:\\Projects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\transforms\\dex\\persiandemoplay\\debug\\folders\\1000\\1f\\main\\classes.dex

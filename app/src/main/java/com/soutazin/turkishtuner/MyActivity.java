@@ -29,18 +29,41 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 
+import org.reactivestreams.Subscription;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.AudioProcessor;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
+import be.tarsos.dsp.pitch.Goertzel;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.FlowableSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.internal.operators.observable.ObservableAll;
+import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
+
+import static io.reactivex.Flowable.create;
 
 public class MyActivity extends Activity {
 
@@ -121,7 +144,7 @@ public class MyActivity extends Activity {
     private float _nearest;
     private double _cents;
     private int gaugeSpinInteger;
-    private Thread mainThread = null;
+    private static Thread mainThread = null;
     private CheckBox chkPersian;
     private float tg_frequency = 0.0f;
     private Dialog dlgHelpView = null;
@@ -135,6 +158,11 @@ public class MyActivity extends Activity {
     private TextView txtFreqViewer;
     private LiveButton btnSetting;
     private LiveButton btnToneGenerator;
+    private static AudioDispatcher dispatcher = null;
+    private static PitchDetectionHandler pdh = null;
+    private Flowable<Float> integerFlowable;
+    private FlowableOnSubscribe<Float> flowableOnSubscribe;
+    private Observable<NoteModel> observable = null;
 
     @Override
     public void onResume() {
@@ -149,70 +177,77 @@ public class MyActivity extends Activity {
     private void startTuner()
     {
 
+
         // راه اندازی اولیه نخ بند مربوط به تیونر
-        AudioDispatcher dispatcher = AudioDispatcherFactory
+        dispatcher = AudioDispatcherFactory
                 .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
 
 // این هندلر برای دریافت فرکانس ورودی راه اندازی می شود
-        PitchDetectionHandler pdh = new PitchDetectionHandler() {
+        pdh = new PitchDetectionHandler() {
             @Override
             public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
                 try {
 
                     _pitchInHertz = result.getPitch();
 
-                    if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
-                        _pitchInHertz = 0;
-                        _indexOfNearest = 0;
-                        _cents = 0;
-                        _nearest = 0;
-                        _pitched = false;
-                        lastIndexFound = 0;
-                        countOfThisFrequency = 0;
-                    } else {
-                        // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
-
-                        _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
-                        if (_indexOfNearest == lastIndexFound) { // اگر آخرین نتی که پیدا کردی تکراری است
-                            countOfThisFrequency++;
-                            Log.d("SATUNER", "pitch foiund : " + _pitchInHertz + " , nearest index found : " + _indexOfNearest);
-                            if (countOfThisFrequency >= MAX_TOKEN_RECOGNIZED) { // اگر این نت بیش از 3 بار تکرار شده است پس درست است
-                                _nearest = /*allFrequencies*/freqInThisRefrence[_indexOfNearest]/*[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414]*/;
-                                Log.d("SATUNER", " nearest pitch found : " + _nearest);
-                                // سنت را محاسبه کن
-                                _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
-                                _pitched = _cents <= 5.0 && _cents >= -5.0;
-
-                            } else {
+                    observable = Observable.fromCallable(new Callable<NoteModel>() {
+                        @Override
+                        public NoteModel call() throws Exception {
+                            if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
                                 _pitchInHertz = 0;
                                 _indexOfNearest = 0;
                                 _cents = 0;
                                 _nearest = 0;
                                 _pitched = false;
-                            }
-                        } else {
-                            countOfThisFrequency = 0;
-                            lastIndexFound = _indexOfNearest;
-                            _indexOfNearest = 0;
-                            _cents = 0;
-                        }
+                                lastIndexFound = 0;
+                                countOfThisFrequency = 0;
+                            } else {
+                                // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
 
-                    }
+                                _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
+                                if (_indexOfNearest == lastIndexFound) { // اگر آخرین نتی که پیدا کردی تکراری است
+                                    countOfThisFrequency++;
+                                    Log.d("SATUNER", "pitch foiund : " + _pitchInHertz + " , nearest index found : " + _indexOfNearest);
+                                    if (countOfThisFrequency >= MAX_TOKEN_RECOGNIZED) { // اگر این نت بیش از 3 بار تکرار شده است پس درست است
+                                        _nearest = /*allFrequencies*/freqInThisRefrence[_indexOfNearest]/*[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414]*/;
+                                        Log.d("SATUNER", " nearest pitch found : " + _nearest);
+                                        // سنت را محاسبه کن
+                                        _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
+                                        _pitched = _cents <= 5.0 && _cents >= -5.0;
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
-                                // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
-                                startDecision(_pitchInHertz, _indexOfNearest, _cents);
+                                    } else {
+                                        _pitchInHertz = 0;
+                                        _indexOfNearest = 0;
+                                        _cents = 0;
+                                        _nearest = 0;
+                                        _pitched = false;
+                                    }
+                                } else {
+                                    countOfThisFrequency = 0;
+                                    lastIndexFound = _indexOfNearest;
+                                    _indexOfNearest = 0;
+                                    _cents = 0;
+                                }
+
                             }
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
+                                        // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
+                                        startDecision(_pitchInHertz, _indexOfNearest, _cents);
+                                    }
+                                }
+                            });
+                            return null;
                         }
                     });
 
 
+
+
                 } catch (Exception ex) {
-                    int a = 0;
-                    a++;
                 }
 
             }
@@ -222,8 +257,14 @@ public class MyActivity extends Activity {
         dispatcher.addAudioProcessor(p);
 
         mainThread = new Thread(dispatcher, "audioRecorder");
-        // به محض اتمام راه اندازی های اولیه ، ماشین تصمیم گیری را شروع کن
+//         به محض اتمام راه اندازی های اولیه ، ماشین تصمیم گیری را شروع کن
         mainThread.start();
+    }
+
+
+
+    private TarsosResponse wrapPitch(float pitchInHertz) {
+        return null;
     }
 
 

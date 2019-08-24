@@ -6,5 +6,9 @@
     {
         "merged": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemoplay\\debug\\menu\\menu_setting.xml",
         "source": "C:\\INPIN Resources\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\menu\\menu_setting.xml"
+    },
+    {
+        "merged": "C:\\Projects\\rohabtuner\\rohabtuner\\app\\build\\intermediates\\res\\merged\\persiandemoplay\\debug\\menu\\menu_setting.xml",
+        "source": "C:\\Projects\\rohabtuner\\rohabtuner\\app\\src\\main\\res\\menu\\menu_setting.xml"
     }
 ]
