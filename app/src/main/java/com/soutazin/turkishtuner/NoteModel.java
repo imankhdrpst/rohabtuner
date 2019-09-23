@@ -1,35 +1,44 @@
 package com.soutazin.turkishtuner;
 
 class NoteModel {
-    private int _indexOfNearest = 0;
-    private int _cents = 0;
-    private int _nearest = 0;
+    private float frequency = 0;
+    private int index = 0;
+    private double cents = 0;
     private boolean _pitched = false;
-    private int lastIndexFound = 0;
-    private int countOfThisFrequency = 0;
 
-    public int get_indexOfNearest() {
-        return _indexOfNearest;
+    public NoteModel(float v,int index, double cents, boolean pitched) {
+        frequency = v;
+        this.cents = cents;
+        _pitched = pitched;
+        this.index = index;
     }
 
-    public void set_indexOfNearest(int _indexOfNearest) {
-        this._indexOfNearest = _indexOfNearest;
+    public int getIndex() {
+        return index;
     }
 
-    public int get_cents() {
-        return _cents;
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public double getCents() {
+        return cents;
+    }
+
+    public void setCents(double cents) {
+        this.cents = cents;
+    }
+
+    public float getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(float frequency) {
+        this.frequency = frequency;
     }
 
     public void set_cents(int _cents) {
-        this._cents = _cents;
-    }
-
-    public int get_nearest() {
-        return _nearest;
-    }
-
-    public void set_nearest(int _nearest) {
-        this._nearest = _nearest;
+        this.cents = _cents;
     }
 
     public boolean is_pitched() {
@@ -40,19 +49,4 @@ class NoteModel {
         this._pitched = _pitched;
     }
 
-    public int getLastIndexFound() {
-        return lastIndexFound;
-    }
-
-    public void setLastIndexFound(int lastIndexFound) {
-        this.lastIndexFound = lastIndexFound;
-    }
-
-    public int getCountOfThisFrequency() {
-        return countOfThisFrequency;
-    }
-
-    public void setCountOfThisFrequency(int countOfThisFrequency) {
-        this.countOfThisFrequency = countOfThisFrequency;
-    }
 }

@@ -1,9 +1,7 @@
 package com.soutazin.turkishtuner;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
@@ -28,42 +26,27 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-
-import org.reactivestreams.Subscription;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.AudioEvent;
 import be.tarsos.dsp.AudioProcessor;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
-import be.tarsos.dsp.pitch.Goertzel;
 import be.tarsos.dsp.pitch.PitchDetectionHandler;
 import be.tarsos.dsp.pitch.PitchDetectionResult;
 import be.tarsos.dsp.pitch.PitchProcessor;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Completable;
-import io.reactivex.CompletableObserver;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.FlowableSubscriber;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.internal.operators.observable.ObservableAll;
 import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
-
-import static io.reactivex.Flowable.create;
 
 public class MyActivity extends Activity {
 
@@ -81,9 +64,6 @@ public class MyActivity extends Activity {
     Handler handler = new Handler();
     //    static float[] allFrequencies = new float[289]; // تمام فرکانس ها در این آرایه قرار می گیرند
     static float[] freqInThisRefrence = new float[289];
-    private static int MAX_TOKEN_RECOGNIZED = 3; // میزان دقت تیونر در تصمیم گیری ... هرچه بزرگتر باشد تصمیم دقیق تر است و البته نتیجه گیری سخت تر
-    private static int countOfThisFrequency = 0;
-    private static int lastIndexFound = 0;
     private ImageView imgGauge; // اندیکاتر
     NumberPicker refrencePicker; // تغییر فرکانس پایه در تنظیمات
     LinearLayout laySelectBemol; // تغییر بمل در تنظیمات
@@ -138,8 +118,6 @@ public class MyActivity extends Activity {
                     , "♯", "\u266F³", "", "♯³", "♯", "\u266F³"};
 
     int width, height;
-    private float _pitchInHertz;
-    private int _indexOfNearest;
     private boolean _pitched;
     private float _nearest;
     private double _cents;
@@ -160,22 +138,22 @@ public class MyActivity extends Activity {
     private LiveButton btnToneGenerator;
     private static AudioDispatcher dispatcher = null;
     private static PitchDetectionHandler pdh = null;
-    private Flowable<Float> integerFlowable;
-    private FlowableOnSubscribe<Float> flowableOnSubscribe;
-    private Observable<NoteModel> observable = null;
+//    private Flowable<Float> integerFlowable;
+//    private FlowableOnSubscribe<Float> flowableOnSubscribe;
+//    private Observable<NoteModel> observable = null;
+    private static final Map<Integer, Integer> indicesMap = new HashMap<Integer, Integer>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void onResume() {
         super.onResume();
-        if (baseFreqChanged)
-        {
+        if (baseFreqChanged) {
             initFloats();
         }
         startTuner();
     }
 
-    private void startTuner()
-    {
+    private void startTuner() {
 
 
         // راه اندازی اولیه نخ بند مربوط به تیونر
@@ -188,63 +166,27 @@ public class MyActivity extends Activity {
             public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
                 try {
 
-                    _pitchInHertz = result.getPitch();
+                    final float _pitchInHertz = result.getPitch();
 
-                    observable = Observable.fromCallable(new Callable<NoteModel>() {
-                        @Override
-                        public NoteModel call() throws Exception {
-                            if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
-                                _pitchInHertz = 0;
-                                _indexOfNearest = 0;
-                                _cents = 0;
-                                _nearest = 0;
-                                _pitched = false;
-                                lastIndexFound = 0;
-                                countOfThisFrequency = 0;
-                            } else {
-                                // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
 
-                                _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
-                                if (_indexOfNearest == lastIndexFound) { // اگر آخرین نتی که پیدا کردی تکراری است
-                                    countOfThisFrequency++;
-                                    Log.d("SATUNER", "pitch foiund : " + _pitchInHertz + " , nearest index found : " + _indexOfNearest);
-                                    if (countOfThisFrequency >= MAX_TOKEN_RECOGNIZED) { // اگر این نت بیش از 3 بار تکرار شده است پس درست است
-                                        _nearest = /*allFrequencies*/freqInThisRefrence[_indexOfNearest]/*[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414]*/;
-                                        Log.d("SATUNER", " nearest pitch found : " + _nearest);
-                                        // سنت را محاسبه کن
-                                        _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
-                                        _pitched = _cents <= 5.0 && _cents >= -5.0;
-
-                                    } else {
-                                        _pitchInHertz = 0;
-                                        _indexOfNearest = 0;
-                                        _cents = 0;
-                                        _nearest = 0;
-                                        _pitched = false;
-                                    }
-                                } else {
-                                    countOfThisFrequency = 0;
-                                    lastIndexFound = _indexOfNearest;
-                                    _indexOfNearest = 0;
-                                    _cents = 0;
-                                }
-
-                            }
-
-                            runOnUiThread(new Runnable() {
+                    compositeDisposable.add(getObservable(_pitchInHertz)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<NoteModel>() {
                                 @Override
-                                public void run() {
-                                    if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
-                                        // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
-                                        startDecision(_pitchInHertz, _indexOfNearest, _cents);
-                                    }
+                                public void accept(NoteModel noteModel) throws Exception {
+                                    startDecision(noteModel);
+//                        if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
+//                            // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
+//                            startDecision(_pitchInHertz, _indexOfNearest, _cents);
+//                        }
                                 }
-                            });
-                            return null;
-                        }
-                    });
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
 
-
+                                }
+                            }));
 
 
                 } catch (Exception ex) {
@@ -261,6 +203,45 @@ public class MyActivity extends Activity {
         mainThread.start();
     }
 
+    private Observable<NoteModel> getObservable(final float _pitchInHertz) {
+        return Observable.fromCallable(new Callable<NoteModel>() {
+            @Override
+            public NoteModel call() throws Exception {
+
+
+                if (_pitchInHertz == -1.0f) { // یعنی هیچ فرکانسی را دریافت نکرده است
+                    indicesMap.clear();
+                    return null;
+                } else {
+                    // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
+
+                    int _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
+
+                    indicesMap.put(_indexOfNearest, indicesMap.get(_indexOfNearest) + 1);
+
+                    _indexOfNearest = getKeyOfMaxCount(Collections.max(indicesMap.values()));
+
+                    _nearest = freqInThisRefrence[_indexOfNearest];
+                    Log.d("SATUNER", " nearest pitch found : " + _nearest);
+                    // سنت را محاسبه کن
+                    _cents = -1200.0f * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
+                    _pitched = _cents <= 5.0 && _cents >= -5.0;
+
+                    return new NoteModel(freqInThisRefrence[_indexOfNearest],_indexOfNearest, _cents, _pitched);
+
+                }
+
+            }
+
+            private Integer getKeyOfMaxCount(Integer max) {
+                for (Map.Entry<Integer, Integer> entry : indicesMap.entrySet()) {
+                    if (entry.getValue() == max)
+                        return entry.getKey();
+                }
+                return null;
+            }
+        });
+    }
 
 
     private TarsosResponse wrapPitch(float pitchInHertz) {
@@ -327,9 +308,6 @@ public class MyActivity extends Activity {
         imgGauge = (ImageView) findViewById(R.id.imggauge);
 
 
-
-
-
         // بررسی کن اگر راهنما باید نشان داده شود
 //        if (PrefrencesHelper.getInstance().isHelpVisible()) {
 //            (new Handler()).postDelayed(new Runnable() {
@@ -354,6 +332,7 @@ public class MyActivity extends Activity {
     public void onDestroy() { // اگر از برنامه خارج شد
         super.onDestroy();
         try {
+            compositeDisposable.dispose();
             mainThread.interrupt();
             mainThread = null;
         } catch (Exception e) {
@@ -575,9 +554,7 @@ public class MyActivity extends Activity {
                 final String appPackageName = BuildConfig.PAID_VERSION; // getPackageName() from Context or Activity object
                 if (BuildConfig.PLATFORM.equals("play")) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                }
-                else
-                {
+                } else {
                     Intent intent = new Intent(Intent.ACTION_EDIT);
                     intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
                     intent.setPackage("com.farsitel.bazaar");
@@ -827,9 +804,11 @@ public class MyActivity extends Activity {
 
     }
 
-    private void startDecision(final float freqHertz, final int index, final double cents) {
+    private void startDecision(NoteModel noteModel) {
         float xscale = width / 11;
-
+        final float freqHertz = noteModel.getFrequency();
+        final int index = noteModel.getIndex();
+        final double cents = noteModel.getCents();
         float dge2 = ((float) cents * (xscale / gaugeSpinInteger)/*, -height / 64*/);
         // انیشمیشن مربوط به چرخش اندیکاتر
         RotateAnimation animation = new RotateAnimation(0, dge2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -881,9 +860,7 @@ public class MyActivity extends Activity {
         }
         if (freqHertz != 0f) {
             txtFreqViewer.setText(String.format("%.2f", freqHertz) + "\nHz");
-        }
-        else
-        {
+        } else {
             txtFreqViewer.setText("");
         }
 
@@ -955,9 +932,7 @@ public class MyActivity extends Activity {
                         demoDialog.show();
                     }
                 }
-            }
-            else
-            {
+            } else {
                 imgSignViewer.setImageResource(sharpResourceId);
                 txtOctaveViewer.setText(octave);
                 txtNoteViewer.setText(note);
