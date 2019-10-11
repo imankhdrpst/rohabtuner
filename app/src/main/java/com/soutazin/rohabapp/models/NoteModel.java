@@ -1,6 +1,6 @@
-package com.soutazin.rohabapp;
+package com.soutazin.rohabapp.models;
 
-class NoteModel {
+public class NoteModel {
     private float frequency = 0;
     private int index = 0;
     private double cents = 0;

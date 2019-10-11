@@ -11,6 +11,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.andexert.library.RippleView;
+import com.soutazin.rohabapp.util.PrefrencesHelper;
 
 
 public class SettingsActivity extends Activity {

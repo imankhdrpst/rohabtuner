@@ -1,4 +1,4 @@
-package com.soutazin.rohabapp;
+package com.soutazin.rohabapp.models;
 
 public class TarsosResponse {
     float _pitchInHertz;

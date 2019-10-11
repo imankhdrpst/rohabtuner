@@ -1,4 +1,4 @@
-package com.soutazin.rohabapp;
+package com.soutazin.rohabapp.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

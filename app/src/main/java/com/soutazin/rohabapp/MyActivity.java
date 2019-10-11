@@ -1,6 +1,6 @@
 package com.soutazin.rohabapp;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -11,6 +11,9 @@ import android.media.AudioTrack;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +21,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,12 +28,18 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.soutazin.rohabapp.models.NoteModel;
+import com.soutazin.rohabapp.models.TarsosResponse;
+import com.soutazin.rohabapp.util.PrefrencesHelper;
+import com.soutazin.rohabapp.util.Util;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.Callable;
 
 import be.tarsos.dsp.AudioDispatcher;
@@ -48,10 +56,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ru.katso.livebutton.LiveButton;
 
-public class MyActivity extends Activity {
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+public class MyActivity extends AppCompatActivity {
 
 
     private static final float CENTS_FACTOR = -1200.0f;// ثابت ضریب محاسبه سنت
+    private static final int PERMISSION_RECORD_AUDIO_REQUEST_CODE = 1001;
+    private static final String TAG = "TUNER";
     public static boolean baseFreqChanged = true;
     int TG_OCTAVE = 0;  // نگه دارنده اکتاو در دیاپازون
     int currentIndexOfThisOctave = 0;
@@ -124,9 +136,7 @@ public class MyActivity extends Activity {
     private double _cents;
     private int gaugeSpinInteger;
     private static Thread mainThread = null;
-    private CheckBox chkPersian;
     private float tg_frequency = 0.0f;
-    private Dialog dlgHelpView = null;
     private TextView txtOctaveViewer;
     private TextView txtCentsViewer;
     private TextView txtNoteViewer;
@@ -139,9 +149,6 @@ public class MyActivity extends Activity {
     private LiveButton btnToneGenerator;
     private static AudioDispatcher dispatcher = null;
     private static PitchDetectionHandler pdh = null;
-    //    private Flowable<Float> integerFlowable;
-//    private FlowableOnSubscribe<Float> flowableOnSubscribe;
-//    private Observable<NoteModel> observable = null;
     private static final Map<Integer, Integer> indicesMap = new HashMap<Integer, Integer>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -160,9 +167,7 @@ public class MyActivity extends Activity {
         super.onPause();
         try {
             dispatcher.stop();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }
@@ -174,53 +179,103 @@ public class MyActivity extends Activity {
         // برای تشخیص صدا از میکروفون و ارسال آن به این Handler از یک Dispatcher استفاده می کند.
         // در پایین این توضیحات نحوه راه اندازی این Dispatcher مشخص است.
         // برای تنظیم SampleRate بطور پیش فرض 44100 در نظر گرفته شده است.
-        // راه اندازی اولیه نخ بند مربوط به تیونر
-        dispatcher = AudioDispatcherFactory
-                .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) == PERMISSION_GRANTED) {
+            // راه اندازی اولیه نخ بند مربوط به تیونر
+            dispatcher = AudioDispatcherFactory
+                    .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
 
 // این هندلر برای دریافت فرکانس ورودی راه اندازی می شود
-        pdh = new PitchDetectionHandler() {
-            @Override
-            public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
-                try {
+            pdh = new PitchDetectionHandler() {
+                @Override
+                public void handlePitch(final PitchDetectionResult result, AudioEvent e) {
+                    try {
 
-                    final float _pitchInHertz = result.getPitch();
+                        final float _pitchInHertz = result.getPitch();
 
-
-                    compositeDisposable.add(
-                            getObservable(_pitchInHertz)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Consumer<NoteModel>() {
-                                        @Override
-                                        public void accept(NoteModel noteModel) throws Exception {
-                                            startDecision(noteModel);
+                        Log.d(TAG, "raw pitch : " + _pitchInHertz);
+                        compositeDisposable.add(
+                                getObservable(_pitchInHertz)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<NoteModel>() {
+                                            @Override
+                                            public void accept(NoteModel noteModel) throws Exception {
+                                                Log.d(TAG, "going to start decision");
+                                                startDecision(noteModel);
 //                        if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
 //                            // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
 //                            startDecision(_pitchInHertz, _indexOfNearest, _cents);
 //                        }
-                                        }
-                                    }, new Consumer<Throwable>() {
-                                        @Override
-                                        public void accept(Throwable throwable) throws Exception {
+                                            }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+//                                                Log.d(TAG, "error : " + throwable.getMessage());
 
-                                        }
-                                    }));
+                                            }
+                                        }));
 
 
-                } catch (Exception ex) {
+                    } catch (Exception ex) {
+                        Log.d(TAG, "global exception : " + ex.getMessage());
+
+                    }
+
                 }
+            };
+            AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN,
+                    PrefrencesHelper.getInstance().getSampleRate(), 2048, pdh);
+            dispatcher.addAudioProcessor(p);
 
-            }
-        };
-        AudioProcessor p = new PitchProcessor(PitchProcessor.PitchEstimationAlgorithm.FFT_YIN,
-                PrefrencesHelper.getInstance().getSampleRate(), 2048, pdh);
-        dispatcher.addAudioProcessor(p);
-
-        mainThread = new Thread(dispatcher, "audioRecorder");
+            mainThread = new Thread(dispatcher, "audioRecorder");
 //         به محض اتمام راه اندازی های اولیه ، ماشین تصمیم گیری را شروع کن
-        mainThread.start();
+            mainThread.start();
+        } else // permission must be granted
+        {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    PERMISSION_RECORD_AUDIO_REQUEST_CODE);
+
+        }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_RECORD_AUDIO_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PERMISSION_GRANTED) {
+                    startTuner();
+                } else {
+//                    new AlertDialog.Builder(this)
+//                            .setTitle("Permission Required")
+//                            .setMessage("ROHAB needs to be granted to use your audio recorder")
+//                            .setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    startTuner();
+//                                }
+//                            })
+//                            .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    finish();
+//                                }
+//                            })
+//                            .show();
+
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
 
     private Observable<NoteModel> getObservable(final float _pitchInHertz) {
         return Observable.fromCallable(new Callable<NoteModel>() {
@@ -275,8 +330,6 @@ public class MyActivity extends Activity {
         setContentView(R.layout.main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getActionBar().hide();
-//        getActionBar().setTitle(getResources().getString(R.string.app_name));
         PrefrencesHelper.getInstance().init(getApplicationContext());
 
 
