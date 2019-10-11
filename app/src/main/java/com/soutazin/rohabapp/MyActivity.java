@@ -66,14 +66,14 @@ public class MyActivity extends Activity {
     //    static float[] allFrequencies = new float[289]; // تمام فرکانس ها در این آرایه قرار می گیرند
     static float[] freqInThisRefrence = new float[289];
     private ImageView imgGauge; // اندیکاتر
-    NumberPicker refrencePicker; // تغییر فرکانس پایه در تنظیمات
-    LinearLayout laySelectBemol; // تغییر بمل در تنظیمات
-    LinearLayout laySelectBaseNote; // تغییر نت پایه در تنظیمات
-    TextView txtBaseNote;
-    ImageView imgBemol1;
-    ImageView imgBemol2;
-    ImageView imgBemol3;
-    ImageView imgBemol4;
+//    NumberPicker refrencePicker; // تغییر فرکانس پایه در تنظیمات
+//    LinearLayout laySelectBemol; // تغییر بمل در تنظیمات
+//    LinearLayout laySelectBaseNote; // تغییر نت پایه در تنظیمات
+//    TextView txtBaseNote;
+//    ImageView imgBemol1;
+//    ImageView imgBemol2;
+//    ImageView imgBemol3;
+//    ImageView imgBemol4;
 
     private boolean lock = false;
 
@@ -154,12 +154,26 @@ public class MyActivity extends Activity {
         startTuner();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            dispatcher.stop();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
     private void startTuner() {
 
         // این تیونر به این شکل کار میکند که از کتابخانه Tarsos برای تشخیص صدا از میکروفون دستگاه استفاده می کند
         // این کتابخانه یک Handler دارد که صدا را به صورت یک Object جاوائی برمیگرداند.
         // برای تشخیص صدا از میکروفون و ارسال آن به این Handler از یک Dispatcher استفاده می کند.
-        // در پایین این توضیحات نحوه راه اندازی این Dispatcher مشخص است. برای تنظیم SampleRate بطور پیش فرض 44100 در نظر گرفته شده است.
+        // در پایین این توضیحات نحوه راه اندازی این Dispatcher مشخص است.
+        // برای تنظیم SampleRate بطور پیش فرض 44100 در نظر گرفته شده است.
         // راه اندازی اولیه نخ بند مربوط به تیونر
         dispatcher = AudioDispatcherFactory
                 .fromDefaultMicrophone((int) PrefrencesHelper.getInstance().getSampleRate(), 2048, 0);
@@ -336,6 +350,7 @@ public class MyActivity extends Activity {
     public void onDestroy() { // اگر از برنامه خارج شد
         super.onDestroy();
         try {
+            dispatcher.stop();
             compositeDisposable.dispose();
             mainThread.interrupt();
             mainThread = null;
@@ -556,14 +571,15 @@ public class MyActivity extends Activity {
             public void onClick(View view) {
 
                 final String appPackageName = BuildConfig.PAID_VERSION; // getPackageName() from Context or Activity object
-                if (BuildConfig.PLATFORM.equals("play")) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_EDIT);
-                    intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
-                    intent.setPackage("com.farsitel.bazaar");
-                    startActivity(intent);
-                }
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+//                if (BuildConfig.PLATFORM.equals("play")) {
+//                } else {
+//                    Intent intent = new Intent(Intent.ACTION_EDIT);
+//                    intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
+//                    intent.setPackage("com.farsitel.bazaar");
+//                    startActivity(intent);
+//                }
 //                Intent intent = new Intent(Intent.ACTION_EDIT);
 //                intent.setData(Uri.parse("bazaar://details?id=" + appPackageName));
 //                intent.setPackage("com.farsitel.bazaar");

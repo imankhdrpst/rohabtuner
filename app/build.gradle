@@ -9,8 +9,12 @@ android {
             storePassword '09126195690'
         }
     }
-    compileSdkVersion 14
+    compileSdkVersion 28
     defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 6
+        versionName "1.6"
     }
 
     flavorDimensions "default"
@@ -20,12 +24,9 @@ android {
             buildConfigField 'String', 'TYPE', '"TURKISH_DEMO"'
             buildConfigField 'String', 'NATIONALITY', '"Turkish"'
             buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
-            buildConfigField 'String', 'PLATFORM', '"play"'
+//            buildConfigField 'String', 'PLATFORM', '"play"'
             resValue "string", "app_name", "Turkish Tuner Demo"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
+
         }
 
         turkishplay {
@@ -33,12 +34,8 @@ android {
             buildConfigField 'String', 'TYPE', '"TURKISH"'
             buildConfigField 'String', 'NATIONALITY', '"Turkish"'
             buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
-            buildConfigField 'String', 'PLATFORM', '"play"'
+//            buildConfigField 'String', 'PLATFORM', '"play"'
             resValue "string", "app_name", "Turkish Tuner"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
         }
 
         persiandemoplay {
@@ -46,75 +43,66 @@ android {
             buildConfigField 'String', 'TYPE', '"PERSIAN_DEMO"'
             buildConfigField 'String', 'NATIONALITY', '"Persian"'
             buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
-            buildConfigField 'String', 'PLATFORM', '"play"'
+//            buildConfigField 'String', 'PLATFORM', '"play"'
             resValue "string", "app_name", "Persian Tuner Demo"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
         }
         persianplay {
             applicationId "com.soutazin.persiantunernew"
             buildConfigField 'String', 'TYPE', '"PERSIAN"'
             buildConfigField 'String', 'NATIONALITY', '"Persian"'
             buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
-            buildConfigField 'String', 'PLATFORM', '"play"'
+//            buildConfigField 'String', 'PLATFORM', '"play"'
             resValue "string", "app_name", "Persian Tuner"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
-        }
-        turkishdemobazar {
-            applicationId "com.soutazin.turkishtunerdemo"
-            buildConfigField 'String', 'TYPE', '"TURKISH_DEMO"'
-            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
-            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
-            buildConfigField 'String', 'PLATFORM', '"bazar"'
-            resValue "string", "app_name", "Turkish Tuner Demo"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
         }
 
-        turkishbazar {
-            applicationId "com.soutazin.turkishtuner"
-            buildConfigField 'String', 'TYPE', '"TURKISH"'
-            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
-            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
-            buildConfigField 'String', 'PLATFORM', '"bazar"'
-            resValue "string", "app_name", "Turkish Tuner"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
-        }
-
-        persiandemobazar {
-            applicationId "com.soutazin.persiantunerdemo"
-            buildConfigField 'String', 'TYPE', '"PERSIAN_DEMO"'
-            buildConfigField 'String', 'NATIONALITY', '"Persian"'
-            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
-            buildConfigField 'String', 'PLATFORM', '"bazar"'
-            resValue "string", "app_name", "Persian Tuner Demo"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
-        }
-        persianbazar {
-            applicationId "com.soutazin.persiantuner"
-            buildConfigField 'String', 'TYPE', '"PERSIAN"'
-            buildConfigField 'String', 'NATIONALITY', '"Persian"'
-            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
-            buildConfigField 'String', 'PLATFORM', '"bazar"'
-            resValue "string", "app_name", "Persian Tuner"
-            minSdkVersion 15
-            targetSdkVersion 15
-            versionCode 6
-            versionName "1.6"
-        }
+//        turkishdemobazar {
+//            applicationId "com.soutazin.turkishtunerdemo"
+//            buildConfigField 'String', 'TYPE', '"TURKISH_DEMO"'
+//            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
+//            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
+//            buildConfigField 'String', 'PLATFORM', '"bazar"'
+//            resValue "string", "app_name", "Turkish Tuner Demo"
+//            minSdkVersion 15
+//            targetSdkVersion 15
+//            versionCode 6
+//            versionName "1.6"
+//        }
+//        turkishbazar {
+//            applicationId "com.soutazin.turkishtuner"
+//            buildConfigField 'String', 'TYPE', '"TURKISH"'
+//            buildConfigField 'String', 'NATIONALITY', '"Turkish"'
+//            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.turkishtuner"'
+//            buildConfigField 'String', 'PLATFORM', '"bazar"'
+//            resValue "string", "app_name", "Turkish Tuner"
+//            minSdkVersion 15
+//            targetSdkVersion 15
+//            versionCode 6
+//            versionName "1.6"
+//        }
+//        persiandemobazar {
+//            applicationId "com.soutazin.persiantunerdemo"
+//            buildConfigField 'String', 'TYPE', '"PERSIAN_DEMO"'
+//            buildConfigField 'String', 'NATIONALITY', '"Persian"'
+//            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
+//            buildConfigField 'String', 'PLATFORM', '"bazar"'
+//            resValue "string", "app_name", "Persian Tuner Demo"
+//            minSdkVersion 15
+//            targetSdkVersion 15
+//            versionCode 6
+//            versionName "1.6"
+//        }
+//        persianbazar {
+//            applicationId "com.soutazin.persiantuner"
+//            buildConfigField 'String', 'TYPE', '"PERSIAN"'
+//            buildConfigField 'String', 'NATIONALITY', '"Persian"'
+//            buildConfigField 'String', 'PAID_VERSION', '"com.soutazin.persiantuner"'
+//            buildConfigField 'String', 'PLATFORM', '"bazar"'
+//            resValue "string", "app_name", "Persian Tuner"
+//            minSdkVersion 15
+//            targetSdkVersion 15
+//            versionCode 6
+//            versionName "1.6"
+//        }
     }
     buildTypes {
         release {
