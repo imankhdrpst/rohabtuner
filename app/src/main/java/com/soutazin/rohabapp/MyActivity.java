@@ -29,18 +29,17 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.soutazin.rohabapp.models.NoteModel;
-import com.soutazin.rohabapp.models.TarsosResponse;
 import com.soutazin.rohabapp.util.PrefrencesHelper;
 import com.soutazin.rohabapp.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.AudioEvent;
@@ -64,6 +63,9 @@ public class MyActivity extends AppCompatActivity {
     private static final float CENTS_FACTOR = -1200.0f;// ثابت ضریب محاسبه سنت
     private static final int PERMISSION_RECORD_AUDIO_REQUEST_CODE = 1001;
     private static final String TAG = "TUNER";
+    private static final int MAX_NUMBER_OF_OCC_TO_VIEW = 5;// تعیین کننده این است که چند بار ظاهر شدن یک نت باعث نمایش ان در صفحه نمایش میشود؟
+    private static final float PITCHED_THRESHOLD = 5.0f; // تعیین کننده بازه ای است که اگر سنت در آن بازه باشد یعنی چراغ سبز شود
+    private static final long GAUGE_ANIMATION_DURATION = 1000;
     public static boolean baseFreqChanged = true;
     int TG_OCTAVE = 0;  // نگه دارنده اکتاو در دیاپازون
     int currentIndexOfThisOctave = 0;
@@ -87,7 +89,7 @@ public class MyActivity extends AppCompatActivity {
 //    ImageView imgBemol3;
 //    ImageView imgBemol4;
 
-    private boolean lock = false;
+    private AtomicBoolean lock = new AtomicBoolean(false);
 
     private static final int OCTAVE = 24;
 
@@ -133,7 +135,7 @@ public class MyActivity extends AppCompatActivity {
     int width, height;
     private boolean _pitched;
     private float _nearest;
-    private double _cents;
+    private long _cents;
     private int gaugeSpinInteger;
     private static Thread mainThread = null;
     private float tg_frequency = 0.0f;
@@ -149,8 +151,13 @@ public class MyActivity extends AppCompatActivity {
     private LiveButton btnToneGenerator;
     private static AudioDispatcher dispatcher = null;
     private static PitchDetectionHandler pdh = null;
-    private static final Map<Integer, Integer> indicesMap = new HashMap<Integer, Integer>();
+    private static final List<Integer> indicesList = new ArrayList<>();
+    private static final List<Integer> centsList = new ArrayList<>();
+
+
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private RotateAnimation gaugeAnimation;
+    private float latestGaugeDegree = 0;
 
     @Override
     public void onResume() {
@@ -283,42 +290,35 @@ public class MyActivity extends AppCompatActivity {
             public NoteModel call() throws Exception {
                 if (_pitchInHertz == -1.0f) {
                     // یعنی هیچ فرکانسی را دریافت نکرده است
-                    indicesMap.clear();
+                    indicesList.clear();
+                    centsList.clear();
                     return null;
                 } else {
                     // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
 
                     int _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
 
-                    indicesMap.put(_indexOfNearest, indicesMap.get(_indexOfNearest) + 1);
+                    indicesList.add(_indexOfNearest);
+                    _indexOfNearest = Collections.max(indicesList);
+                    if (Collections.frequency(indicesList, _indexOfNearest) > MAX_NUMBER_OF_OCC_TO_VIEW) {
 
-                    _indexOfNearest = getKeyOfMaxCount(Collections.max(indicesMap.values()));
+                        _nearest = freqInThisRefrence[_indexOfNearest];
+                        // سنت را محاسبه کن
+                        long foundCents =  Math.round(CENTS_FACTOR * (Math.log10(_nearest / _pitchInHertz) / Math.log10(2.0)));
+                        centsList.add((int) foundCents);
 
-                    _nearest = freqInThisRefrence[_indexOfNearest];
-                    Log.d("SATUNER", " nearest pitch found : " + _nearest);
-                    // سنت را محاسبه کن
-                    _cents = CENTS_FACTOR * (Math.log10(_nearest / _pitchInHertz/*frequency*/) / Math.log10(2.0));  // -12.0 * log2(nearest / frequency) * 10.0;
-                    _pitched = _cents <= 5.0 && _cents >= -5.0;
+                        _cents = Collections.max(centsList);
 
-                    return new NoteModel(freqInThisRefrence[_indexOfNearest], _indexOfNearest, _cents, _pitched);
+                        _pitched = _cents != 0 && _cents <= PITCHED_THRESHOLD && _cents >= -PITCHED_THRESHOLD;
 
+                        return new NoteModel(freqInThisRefrence[_indexOfNearest], _indexOfNearest, _cents, _pitched);
+
+                    }
+                    return null;
                 }
 
-            }
-
-            private Integer getKeyOfMaxCount(Integer max) {
-                for (Map.Entry<Integer, Integer> entry : indicesMap.entrySet()) {
-                    if (entry.getValue() == max)
-                        return entry.getKey();
-                }
-                return null;
             }
         });
-    }
-
-
-    private TarsosResponse wrapPitch(float pitchInHertz) {
-        return null;
     }
 
 
@@ -878,46 +878,57 @@ public class MyActivity extends AppCompatActivity {
     }
 
     private void startDecision(NoteModel noteModel) {
-        float xscale = width / 11;
+        double xscale = width / 7.5; /// it was 11
         final float freqHertz = noteModel.getFrequency();
         final int index = noteModel.getIndex();
         final double cents = noteModel.getCents();
-        float dge2 = ((float) cents * (xscale / gaugeSpinInteger)/*, -height / 64*/);
+        final float dge2 = (float) ((float) cents * (xscale / gaugeSpinInteger));
         // انیشمیشن مربوط به چرخش اندیکاتر
-        RotateAnimation animation = new RotateAnimation(0, dge2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setDuration(1200);
-        animation.setFillAfter(true);
-        animation.setFillEnabled(true);
-        animation.setRepeatMode(Animation.REVERSE);
-        animation.setRepeatCount(1);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                lock = true;
-                // تصمیم گرفته شده را نمایش بده به محض شروع چرخش اندیگاتور
-                viewDecision(freqHertz, index, cents);
+
+        if (dge2 != latestGaugeDegree) {
+            try {
+                gaugeAnimation.cancel();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                // نمایش تصمیم را کنسل کن
-                viewDecision(0, 0, cents);
-                lock = false;
-            }
+            gaugeAnimation = new RotateAnimation(0, dge2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            gaugeAnimation.setDuration(GAUGE_ANIMATION_DURATION);
+            gaugeAnimation.setFillAfter(true);
+            gaugeAnimation.setFillEnabled(true);
+            gaugeAnimation.setRepeatMode(Animation.REVERSE);
+            gaugeAnimation.setRepeatCount(1);
+            gaugeAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    lock.set(true);
+                    // تصمیم گرفته شده را نمایش بده به محض شروع چرخش اندیگاتور
+                    viewDecision(freqHertz, index, cents, false);
+                    latestGaugeDegree = dge2;
+                }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // نمایش تصمیم را کنسل کن
+                    viewDecision(0, 0, cents, true);
+                    lock.set(false);
+                }
 
-            }
-        });
-        imgGauge.startAnimation(animation);
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            imgGauge.startAnimation(gaugeAnimation);
+        }
     }
 
-    private void viewDecision(float freqHertz, int index, double cents) {
+    private void viewDecision(float freqHertz, int index, double cents, boolean clear) {
         // نمایش تصمیم
         String note = "", sharp = "", octave = "";
+
         int additive = PrefrencesHelper.getInstance().getBaseBemol().length() * 2;
-        Log.d("SATUNER", "viewing decision---> index : " + index + " , bemols factor   :" + additive + " , octave :" + OCTAVE);
+
         if (PrefrencesHelper.getInstance().getBaseNote().startsWith("C")) {
             note = freqHertz <= 0.0f ? "" : notes_C[/*audio.*/(index + additive) % OCTAVE];
             sharp = freqHertz <= 0.0f ? "" : sharps_C[/*audio.*/(index + additive) % OCTAVE];
@@ -965,7 +976,7 @@ public class MyActivity extends AppCompatActivity {
         int octaveFound = /*audio.*/(index + additive) / OCTAVE - 1;
         octave = /*audio.frequency*/freqHertz == 0.0f ? "" : String.valueOf(octaveFound);
 
-        if (freqHertz <= 0.0f || octaveFound < 0) {
+        if (clear && freqHertz <= 0.0f || octaveFound < 0) {
             txtNoteViewer.setText("");
             txtCentsViewer.setText("");
             txtOctaveViewer.setText("");
