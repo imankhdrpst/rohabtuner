@@ -6,10 +6,10 @@ public class NoteModel {
     private double cents = 0;
     private boolean _pitched = false;
 
-    public NoteModel(float v,int index, double cents, boolean pitched) {
-        frequency = v;
+    public NoteModel(float frequency,int index, double cents, boolean pitched) {
+        this.frequency = frequency;
         this.cents = cents;
-        _pitched = pitched;
+        this._pitched = pitched;
         this.index = index;
     }
 

@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_margin="@dimen/_16sdp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="top"
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_margin="@dimen/_16sdp"
                     android:textColor="@color/White"
                     android:text="Octave"/>
 
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/num_picker_octave"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_margin="@dimen/_16sdp"
                     android:editable="false"
                     />
 
@@ -65,7 +65,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:weightSum="2"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_margin="@dimen/_16sdp"
             android:orientation="vertical">
 
 
@@ -113,14 +113,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txtOctaveViewer"
                     android:textColor="@color/White"
-                    android:textSize="@dimen/font_size_note"/>
+                    android:textSize="@dimen/_24sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtNoteViewer"
                     android:textColor="@color/White"
-                    android:textSize="@dimen/font_size_note"/>
+                    android:textSize="@dimen/_24sdp"/>
 
 
                 <ImageView
@@ -145,25 +145,25 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:padding="@dimen/setting_items_padding"
+                    android:padding="@dimen/_15sdp"
                     android:src="@drawable/bemol1"
                     android:id="@+id/btn_bemol_tone"
-                    android:layout_margin="@dimen/share_button_margin"/>
+                    android:layout_margin="@dimen/_10sdp"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:text="Play"
                     android:id="@+id/btn_play_tone"
-                    android:layout_margin="@dimen/share_button_margin"/>
+                    android:layout_margin="@dimen/_10sdp"/>
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:padding="@dimen/setting_items_padding"
+                    android:padding="@dimen/_15sdp"
                     android:src="@drawable/diese"
                     android:id="@+id/btn_diese_tone"
-                    android:layout_margin="@dimen/share_button_margin"/>
+                    android:layout_margin="@dimen/_10sdp"/>
 
 
 

@@ -31,7 +31,6 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        getActionBar().hide();
         RippleView rippleFB = (RippleView) findViewById(R.id.fb_ripple);
         RippleView rippleText = (RippleView) findViewById(R.id.text_ripple);
 

@@ -26,7 +26,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:padding="@dimen/setting_items_padding"
+                android:padding="@dimen/_15sdp"
                 android:orientation="horizontal">
 
 
@@ -97,7 +97,7 @@
                                     android:id="@+id/bemol1"
                                     android:layout_weight="1"
                                     android:src="@drawable/bemol"
-                                    android:layout_margin="@dimen/share_button_margin"/>
+                                    android:layout_margin="@dimen/_10sdp"/>
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                                     android:id="@+id/bemol2"
                                     android:layout_weight="1"
                                     android:src="@drawable/bemol"
-                                    android:layout_margin="@dimen/share_button_margin"/>
+                                    android:layout_margin="@dimen/_10sdp"/>
 
 
                             </LinearLayout>
@@ -123,7 +123,7 @@
                                     android:id="@+id/bemol3"
                                     android:layout_weight="1"
                                     android:src="@drawable/bemol"
-                                    android:layout_margin="@dimen/share_button_margin"/>
+                                    android:layout_margin="@dimen/_10sdp"/>
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                                     android:id="@+id/bemol4"
                                     android:layout_weight="1"
                                     android:src="@drawable/bemol"
-                                    android:layout_margin="@dimen/share_button_margin"/>
+                                    android:layout_margin="@dimen/_10sdp"/>
 
                             </LinearLayout>
 
@@ -169,7 +169,7 @@
                                 android:id="@+id/txt_base_not_view"
                                 android:gravity="center"
                                 android:layout_gravity="center"
-                                android:textSize="@dimen/font_size_setting_note"
+                                android:textSize="@dimen/_24ssp"
                                 android:text="C"/>
 
                         </LinearLayout>
@@ -195,7 +195,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         rv_centered="true"
-                        android:layout_margin="@dimen/share_button_margin"
+                        android:layout_margin="@dimen/_10sdp"
                         ripple:rv_zoom="true"
                         ripple:rv_centered="true"
                         ripple:rv_type="rectangle"
@@ -211,7 +211,7 @@
                         android:id="@+id/text_ripple"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_margin="@dimen/share_button_margin"
+                        android:layout_margin="@dimen/_10sdp"
 
                         rv_centered="true"
                         ripple:rv_zoom="true"
@@ -225,8 +225,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <Button
-                                android:layout_width="@dimen/share_button_width"
-                                android:layout_height="@dimen/share_button_height"
+                                android:layout_width="@dimen/_150sdp"
+                                android:layout_height="@dimen/_45sdp"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/White"
                                 android:background="@color/ForestGreen"

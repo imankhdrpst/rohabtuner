@@ -60,38 +60,53 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 public class MyActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "TUNER";
     private static final float CENTS_FACTOR = -1200.0f;// ثابت ضریب محاسبه سنت
     private static final int PERMISSION_RECORD_AUDIO_REQUEST_CODE = 1001;
-    private static final String TAG = "TUNER";
     private static final int MAX_NUMBER_OF_OCC_TO_VIEW = 5;// تعیین کننده این است که چند بار ظاهر شدن یک نت باعث نمایش ان در صفحه نمایش میشود؟
     private static final float PITCHED_THRESHOLD = 5.0f; // تعیین کننده بازه ای است که اگر سنت در آن بازه باشد یعنی چراغ سبز شود
     private static final long GAUGE_ANIMATION_DURATION = 1000;
-    public static boolean baseFreqChanged = true;
-    int TG_OCTAVE = 0;  // نگه دارنده اکتاو در دیاپازون
-    int currentIndexOfThisOctave = 0;
+    private static int TG_OCTAVE = 0;  // نگه دارنده اکتاو در دیاپازون
+
+    public static boolean baseFreqChanged = true;  // این پرچم نمایش میدهد که آیا فرکانس پایه تغییر کرده یا خیر
+
+    int currentIndexOfThisOctave = 0; // نشان می دهد که اندیس اکتاو جاری برای محاسبات چیست
+
     private final int duration = 3; // زمان به صدا درآمدن دیاپازون
+
     private final int sampleRate = 8000; // ویژه دیاپازون
+
     private final int numSamples = duration * sampleRate; // ویژه دیاپازون
+
     private final double sample[] = new double[numSamples]; // ویژه دیاپازون
 
-    private final byte generatedSnd[] = new byte[2 * numSamples];
+    private final byte generatedSnd[] = new byte[2 * numSamples]; // یک آرایه برای انجام محاسبات ریاضی برای تولید صدا
 
-    Handler handler = new Handler();
-    //    static float[] allFrequencies = new float[289]; // تمام فرکانس ها در این آرایه قرار می گیرند
-    static float[] freqInThisRefrence = new float[289];
-    private ImageView imgGauge; // اندیکاتر
-//    NumberPicker refrencePicker; // تغییر فرکانس پایه در تنظیمات
-//    LinearLayout laySelectBemol; // تغییر بمل در تنظیمات
-//    LinearLayout laySelectBaseNote; // تغییر نت پایه در تنظیمات
-//    TextView txtBaseNote;
-//    ImageView imgBemol1;
-//    ImageView imgBemol2;
-//    ImageView imgBemol3;
-//    ImageView imgBemol4;
+    private static final Handler handler = new Handler(); // هندلر اصلی برنامه
 
-    private AtomicBoolean lock = new AtomicBoolean(false);
+    private static Thread mainThread = null; // نخ اصلی پروسه صدا
 
-    private static final int OCTAVE = 24;
+    private static AudioDispatcher dispatcher = null; // کلاس بررسی وانتقال صدا به فرکانس
+
+    private static PitchDetectionHandler pdh = null; // هندلر اصلی کتابخانه TarsosDSP
+
+    private static final List<Integer> indicesList = new ArrayList<>(); // لیست اندیس صدا های کشف شده در آخرین صدایی که تشخیص داده شده است
+
+    private static final List<Integer> centsList = new ArrayList<>(); // لیست سنت های کشف شده برای آخرین صدای کشف شده
+
+    // کلاس نگهدارنده Object های disposable مربطو به ساختار RxJava
+    // ساختار RxJava برای این به پروژه افزوده شده است
+    // که تضمینی بر عملیات Multi-Threading برای فرآیدن های تشخیص نت باشد
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+
+    static float[] freqInThisReference = new float[289]; // تمام فرکانس های تعریف شده در مرجع جاری (مثلا 450) در این آرایه ریخته خواهد شد تا در محاسبات شرکت کند
+
+    private ImageView imgGauge; // این View همان نمایشگر درجه دار وسط صفحه است
+
+    private AtomicBoolean lock = new AtomicBoolean(false); // یک پرچم همگام سازی شده برای اینکه انجام برخی محاسبات را متوقف سازد
+
+    private static final int OCTAVE = 24; // نمایشگر اکتاو که بصورت پیش فرض روی 24 قرار داده شده
 
     // علامت ها و نت ها در 24 حالت اساسی
 
@@ -133,12 +148,8 @@ public class MyActivity extends AppCompatActivity {
                     , "♯", "\u266F³", "", "♯³", "♯", "\u266F³"};
 
     int width, height;
-    private boolean _pitched;
-    private float _nearest;
-    private long _cents;
     private int gaugeSpinInteger;
-    private static Thread mainThread = null;
-    private float tg_frequency = 0.0f;
+    private float tg_frequency = 0.0f; // فرکانس مربوط به ToneGenerator
     private TextView txtOctaveViewer;
     private TextView txtCentsViewer;
     private TextView txtNoteViewer;
@@ -149,15 +160,8 @@ public class MyActivity extends AppCompatActivity {
     private TextView txtFreqViewer;
     private LiveButton btnSetting;
     private LiveButton btnToneGenerator;
-    private static AudioDispatcher dispatcher = null;
-    private static PitchDetectionHandler pdh = null;
-    private static final List<Integer> indicesList = new ArrayList<>();
-    private static final List<Integer> centsList = new ArrayList<>();
-
-
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private RotateAnimation gaugeAnimation;
-    private float latestGaugeDegree = 0;
+//    private float latestGaugeDegree = 0;
 
     @Override
     public void onResume() {
@@ -200,7 +204,8 @@ public class MyActivity extends AppCompatActivity {
 
                         final float _pitchInHertz = result.getPitch();
 
-                        Log.d(TAG, "raw pitch : " + _pitchInHertz);
+                        if (_pitchInHertz != -1)
+                            Log.d(TAG, "raw pitch : " + _pitchInHertz);
                         compositeDisposable.add(
                                 getObservable(_pitchInHertz)
                                         .subscribeOn(Schedulers.io())
@@ -208,7 +213,7 @@ public class MyActivity extends AppCompatActivity {
                                         .subscribe(new Consumer<NoteModel>() {
                                             @Override
                                             public void accept(NoteModel noteModel) throws Exception {
-                                                Log.d(TAG, "going to start decision");
+                                                Log.d(TAG, "going to start decision : ------------> " + noteModel.getFrequency());
                                                 startDecision(noteModel);
 //                        if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
 //                            // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
@@ -290,28 +295,27 @@ public class MyActivity extends AppCompatActivity {
             public NoteModel call() throws Exception {
                 if (_pitchInHertz == -1.0f) {
                     // یعنی هیچ فرکانسی را دریافت نکرده است
-                    indicesList.clear();
-                    centsList.clear();
                     return null;
                 } else {
                     // به کمک کلاس های مربطوه به جتجوی فرکانس در میان نت های رهاب بپرداز
 
-                    int _indexOfNearest = Util.nearInclusive(freqInThisRefrence, /*audio.frequency*/ _pitchInHertz);
+                    int _indexOfNearest = Util.nearInclusive(freqInThisReference, /*audio.frequency*/ _pitchInHertz);
 
                     indicesList.add(_indexOfNearest);
-                    _indexOfNearest = Collections.max(indicesList);
+//                    _indexOfNearest = Collections.max(indicesList);
                     if (Collections.frequency(indicesList, _indexOfNearest) > MAX_NUMBER_OF_OCC_TO_VIEW) {
 
-                        _nearest = freqInThisRefrence[_indexOfNearest];
                         // سنت را محاسبه کن
-                        long foundCents =  Math.round(CENTS_FACTOR * (Math.log10(_nearest / _pitchInHertz) / Math.log10(2.0)));
+                        long foundCents = Math.round(CENTS_FACTOR * (Math.log10(freqInThisReference[_indexOfNearest] / _pitchInHertz) / Math.log10(2.0)));
                         centsList.add((int) foundCents);
 
-                        _cents = Collections.max(centsList);
+                        long _cents = Collections.max(centsList);
 
-                        _pitched = _cents != 0 && _cents <= PITCHED_THRESHOLD && _cents >= -PITCHED_THRESHOLD;
+                        // ابتدا باید آ رایه های شامل نت ها و سنت های پیدا شده پاک شوند تا در محاسبات بعدی شرکت نکنند
+                        indicesList.clear();
+                        centsList.clear();
 
-                        return new NoteModel(freqInThisRefrence[_indexOfNearest], _indexOfNearest, _cents, _pitched);
+                        return new NoteModel(freqInThisReference[_indexOfNearest], _indexOfNearest, _cents, _cents != 0 && _cents <= PITCHED_THRESHOLD && _cents >= -PITCHED_THRESHOLD);
 
                     }
                     return null;
@@ -332,8 +336,7 @@ public class MyActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         PrefrencesHelper.getInstance().init(getApplicationContext());
 
-
-        gaugeSpinInteger = (int) getResources().getDimension(R.dimen.gauge_spin);
+        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._17sdp);
 
         android.view.Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -394,7 +397,7 @@ public class MyActivity extends AppCompatActivity {
 
 //    private void initCurrentBaseFrequesncyArray() {
 //        for (int j = 0; j < 289; j++) {
-//            freqInThisRefrence[j] = /*allFrequencies*/freqInThisRefrence/*[j]*/[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414];
+//            freqInThisReference[j] = /*allFrequencies*/freqInThisReference/*[j]*/[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414];
 //        }
 //
 //    }
@@ -457,7 +460,7 @@ public class MyActivity extends AppCompatActivity {
         btnPlaySound.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                tg_frequency = /*allFrequencies*/freqInThisRefrence[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
 // راه اندازی ابتدائی دیاپازون
                 initToneGenerator(tg_frequency);
 
@@ -488,7 +491,7 @@ public class MyActivity extends AppCompatActivity {
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
                 octavePicker.setValue(TG_OCTAVE);
 
-                tg_frequency = /*allFrequencies*/freqInThisRefrence[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
 
             }
         });
@@ -515,7 +518,7 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
                 octavePicker.setValue(TG_OCTAVE);
-                tg_frequency = /*allFrequencies*/freqInThisRefrence[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
 
             }
         });
@@ -527,7 +530,7 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
-                tg_frequency = /*allFrequencies*/freqInThisRefrence[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
 
             }
         });
@@ -543,7 +546,7 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
-                tg_frequency = /*allFrequencies*/freqInThisRefrence[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
 
             }
         });
@@ -857,7 +860,7 @@ public class MyActivity extends AppCompatActivity {
                 for (int j = 0; j < tArr.length; j++) {
                     if (j == (int) PrefrencesHelper.getInstance().getBaseFrequency() - 414) {
                         /*allFrequencies*/
-                        freqInThisRefrence[c] = Float.parseFloat(tArr[j]);
+                        freqInThisReference[c] = Float.parseFloat(tArr[j]);
                     }
                 }
                 mLine = reader.readLine();
@@ -877,73 +880,72 @@ public class MyActivity extends AppCompatActivity {
 
     }
 
-    private void startDecision(NoteModel noteModel) {
-        double xscale = width / 7.5; /// it was 11
-        final float freqHertz = noteModel.getFrequency();
-        final int index = noteModel.getIndex();
-        final double cents = noteModel.getCents();
-        final float dge2 = (float) ((float) cents * (xscale / gaugeSpinInteger));
+    private void startDecision(final NoteModel noteModel) {
+
+        float xscale = width / 19.5f; /// it was 11
+        final float dge2 = ((float) noteModel.getCents() * (xscale / gaugeSpinInteger));
         // انیشمیشن مربوط به چرخش اندیکاتر
 
-        if (dge2 != latestGaugeDegree) {
+        if (lock.compareAndSet(true, true)) {
             try {
-                gaugeAnimation.cancel();
+                return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            gaugeAnimation = new RotateAnimation(0, dge2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            gaugeAnimation.setDuration(GAUGE_ANIMATION_DURATION);
-            gaugeAnimation.setFillAfter(true);
-            gaugeAnimation.setFillEnabled(true);
-            gaugeAnimation.setRepeatMode(Animation.REVERSE);
-            gaugeAnimation.setRepeatCount(1);
-            gaugeAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    lock.set(true);
-                    // تصمیم گرفته شده را نمایش بده به محض شروع چرخش اندیگاتور
-                    viewDecision(freqHertz, index, cents, false);
-                    latestGaugeDegree = dge2;
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    // نمایش تصمیم را کنسل کن
-                    viewDecision(0, 0, cents, true);
-                    lock.set(false);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            imgGauge.startAnimation(gaugeAnimation);
         }
+
+        gaugeAnimation = new RotateAnimation(0, dge2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        gaugeAnimation.setDuration(GAUGE_ANIMATION_DURATION);
+        gaugeAnimation.setFillAfter(true);
+        gaugeAnimation.setFillEnabled(true);
+        gaugeAnimation.setRepeatMode(Animation.REVERSE);
+        gaugeAnimation.setRepeatCount(1);
+        gaugeAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                lock.set(true);
+                // تصمیم گرفته شده را نمایش بده به محض شروع چرخش اندیگاتور
+                viewDecision(noteModel, false);
+//                    latestGaugeDegree = dge2;
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // نمایش تصمیم را کنسل کن
+                viewDecision(new NoteModel(0, 0, noteModel.getCents(), false), true);
+                lock.set(false);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        imgGauge.startAnimation(gaugeAnimation);
+//        }
     }
 
-    private void viewDecision(float freqHertz, int index, double cents, boolean clear) {
+    private void viewDecision(NoteModel noteModel, boolean clear) {
         // نمایش تصمیم
         String note = "", sharp = "", octave = "";
 
         int additive = PrefrencesHelper.getInstance().getBaseBemol().length() * 2;
 
         if (PrefrencesHelper.getInstance().getBaseNote().startsWith("C")) {
-            note = freqHertz <= 0.0f ? "" : notes_C[/*audio.*/(index + additive) % OCTAVE];
-            sharp = freqHertz <= 0.0f ? "" : sharps_C[/*audio.*/(index + additive) % OCTAVE];
+            note = noteModel.getFrequency() <= 0.0f ? "" : notes_C[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
+            sharp = noteModel.getFrequency() <= 0.0f ? "" : sharps_C[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
         } else if (PrefrencesHelper.getInstance().getBaseNote().startsWith("E")) {
-            note = freqHertz <= 0.0f ? "" : notes_Eb[/*audio.*/(index + additive) % OCTAVE];
-            sharp = freqHertz <= 0.0f ? "" : sharps_Eb[/*audio.*/(index + additive) % OCTAVE];
+            note = noteModel.getFrequency() <= 0.0f ? "" : notes_Eb[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
+            sharp = noteModel.getFrequency() <= 0.0f ? "" : sharps_Eb[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
         } else if (PrefrencesHelper.getInstance().getBaseNote().startsWith("F")) {
-            note = freqHertz <= 0.0f ? "" : notes_F[/*audio.*/(index + additive) % OCTAVE];
-            sharp = freqHertz <= 0.0f ? "" : sharps_F[/*audio.*/(index + additive) % OCTAVE];
+            note = noteModel.getFrequency() <= 0.0f ? "" : notes_F[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
+            sharp = noteModel.getFrequency() <= 0.0f ? "" : sharps_F[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
         } else if (PrefrencesHelper.getInstance().getBaseNote().startsWith("B")) {
-            note = freqHertz <= 0.0f ? "" : notes_Bb[/*audio.*/(index + additive) % OCTAVE];
-            sharp = freqHertz <= 0.0f ? "" : sharps_Bb[/*audio.*/(index + additive) % OCTAVE];
+            note = noteModel.getFrequency() <= 0.0f ? "" : notes_Bb[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
+            sharp = noteModel.getFrequency() <= 0.0f ? "" : sharps_Bb[/*audio.*/(noteModel.getIndex() + additive) % OCTAVE];
         }
-        if (freqHertz != 0f) {
-            txtFreqViewer.setText(String.format("%.2f", freqHertz) + "\nHz");
+        if (noteModel.getFrequency() != 0f) {
+            txtFreqViewer.setText(String.format("%.2f", noteModel.getFrequency()) + "\nHz");
         } else {
             txtFreqViewer.setText("");
         }
@@ -951,7 +953,7 @@ public class MyActivity extends AppCompatActivity {
 // فیلتر مربوط به کوک بودن یا نبودن نت
         int correctnessResource = R.drawable.wrong;
 
-        if (cents <= 5.0f && cents >= -5.0f) {
+        if (noteModel.getCents() <= 5.0f && noteModel.getCents() >= -5.0f) {
             correctnessResource = R.drawable.correct;
         }
         int sharpResourceId = 0;
@@ -973,10 +975,10 @@ public class MyActivity extends AppCompatActivity {
             sharpResourceId = R.drawable.bemol1;
         }
 
-        int octaveFound = /*audio.*/(index + additive) / OCTAVE - 1;
-        octave = /*audio.frequency*/freqHertz == 0.0f ? "" : String.valueOf(octaveFound);
+        int octaveFound = /*audio.*/(noteModel.getIndex() + additive) / OCTAVE - 1;
+        octave = /*audio.frequency*/noteModel.getFrequency() == 0.0f ? "" : String.valueOf(octaveFound);
 
-        if (clear && freqHertz <= 0.0f || octaveFound < 0) {
+        if (clear && noteModel.getFrequency() <= 0.0f || octaveFound < 0) {
             txtNoteViewer.setText("");
             txtCentsViewer.setText("");
             txtOctaveViewer.setText("");
@@ -995,18 +997,18 @@ public class MyActivity extends AppCompatActivity {
                     imgSignViewer.setImageResource(sharpResourceId);
                     layCentsViewer.setVisibility(View.VISIBLE);
                     String s = "";
-                    if (cents > 0) {
+                    if (noteModel.getCents() > 0) {
                         s = "+";
                     } else {
                         s = "-";
                     }
-                    String centstring = String.format("%.0f", (Math.abs(cents)));
+                    String centstring = String.format("%.0f", (Math.abs(noteModel.getCents())));
                     if (!centstring.equals("0")) {
                         s += centstring;
                     } else {
                         s = centstring;
                     }
-                    txtCentsViewer.setText(cents == 0 ? "" : s);
+                    txtCentsViewer.setText(noteModel.getCents() == 0 ? "" : s);
                     imgcorrectnessView.setVisibility(View.VISIBLE);
                     imgcorrectnessView.setImageResource(correctnessResource);
                 } else {
@@ -1024,18 +1026,18 @@ public class MyActivity extends AppCompatActivity {
                 imgSignViewer.setImageResource(sharpResourceId);
                 layCentsViewer.setVisibility(View.VISIBLE);
                 String s = "";
-                if (cents > 0) {
+                if (noteModel.getCents() > 0) {
                     s = "+";
                 } else {
                     s = "-";
                 }
-                String centstring = String.format("%.0f", (Math.abs(cents)));
+                String centstring = String.format("%.0f", (Math.abs(noteModel.getCents())));
                 if (!centstring.equals("0")) {
                     s += centstring;
                 } else {
                     s = centstring;
                 }
-                txtCentsViewer.setText(cents == 0 ? "" : s);
+                txtCentsViewer.setText(noteModel.getCents() == 0 ? "" : s);
                 imgcorrectnessView.setVisibility(View.VISIBLE);
                 imgcorrectnessView.setImageResource(correctnessResource);
             }
