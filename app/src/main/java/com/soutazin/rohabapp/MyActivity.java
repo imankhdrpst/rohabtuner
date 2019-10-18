@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -107,6 +106,7 @@ public class MyActivity extends AppCompatActivity {
 
     private AtomicBoolean lock = new AtomicBoolean(false); // یک پرچم همگام سازی شده برای اینکه انجام برخی محاسبات را متوقف سازد
 
+
     private static final int OCTAVE = 24; // نمایشگر اکتاو که بصورت پیش فرض روی 24 قرار داده شده
 
     // علامت ها و نت ها در 24 حالت اساسی
@@ -149,7 +149,6 @@ public class MyActivity extends AppCompatActivity {
                     , "♯", "\u266F³", "", "♯³", "♯", "\u266F³"};
 
     int width, height;
-    private int gaugeSpinInteger;
     private float tg_frequency = 0.0f; // فرکانس مربوط به ToneGenerator
     private TextView txtOctaveViewer;
     private TextView txtCentsViewer;
@@ -162,12 +161,11 @@ public class MyActivity extends AppCompatActivity {
     private LiveButton btnSetting;
     private LiveButton btnToneGenerator;
     private RotateAnimation gaugeAnimation;
-//    private float latestGaugeDegree = 0;
 
     @Override
     public void onResume() {
         super.onResume();
-        if (baseFreqChanged) {
+        if (baseFreqChanged) { // اگر از صفحه setting برگردیم و تغییراتی داشته باشیم برای اعمال آن ها لازم است از ابتدا محاسبات انجام شود
             initFloats();
         }
         startTuner();
@@ -178,7 +176,7 @@ public class MyActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         try {
-            dispatcher.stop();
+            dispatcher.stop(); // لازم است هنگام متوقف شدن برنامه dispatcher از کار بیفتد
         } catch (Exception e) {
 
         }
@@ -205,8 +203,6 @@ public class MyActivity extends AppCompatActivity {
 
                         final float _pitchInHertz = result.getPitch();
 
-                        if (_pitchInHertz != -1)
-                            Log.d(TAG, "raw pitch : " + _pitchInHertz);
                         compositeDisposable.add(
                                 getObservable(_pitchInHertz)
                                         .subscribeOn(Schedulers.io())
@@ -214,25 +210,18 @@ public class MyActivity extends AppCompatActivity {
                                         .subscribe(new Consumer<NoteModel>() {
                                             @Override
                                             public void accept(NoteModel noteModel) throws Exception {
-                                                Log.d(TAG, "going to start decision : ------------> " + noteModel.getFrequency());
+                                                // نت محاسبه شده و لازم است تا نمایش داده شود
                                                 startDecision(noteModel);
-//                        if (!lock && _pitchInHertz > 0 && _indexOfNearest > 0) {
-//                            // از آنجایی که نت درست پیدا شده و تصمیم گیری انجام شده است باید این تصمیم اجرا شود
-//                            startDecision(_pitchInHertz, _indexOfNearest, _cents);
-//                        }
                                             }
                                         }, new Consumer<Throwable>() {
                                             @Override
                                             public void accept(Throwable throwable) throws Exception {
-//                                                Log.d(TAG, "error : " + throwable.getMessage());
 
                                             }
                                         }));
 
 
                     } catch (Exception ex) {
-                        Log.d(TAG, "global exception : " + ex.getMessage());
-
                     }
 
                 }
@@ -337,8 +326,7 @@ public class MyActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         PrefrencesHelper.getInstance().init(getApplicationContext());
 
-        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._299sdp);
-
+        // دسترسی به ابعاد گوشی برای محاسبات چرخش درجه ها
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -365,6 +353,8 @@ public class MyActivity extends AppCompatActivity {
         btnToneGenerator.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // با کلیک روی دکمه ToneGenerator  صفحه مربوطه باز می شود
                 createToneGeneratorDialog();
 
             }
@@ -373,7 +363,8 @@ public class MyActivity extends AppCompatActivity {
         btnSetting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                createSettingDialog();
+
+                // با کلیک روی دکمه Setting صفحه مربوطه باز می شود
                 Intent intent = new Intent(MyActivity.this, SettingsActivity.class);
                 startActivity(intent);
 
@@ -381,7 +372,6 @@ public class MyActivity extends AppCompatActivity {
         });
 
         imgGauge = (ImageView) findViewById(R.id.imggauge);
-
 
         // بررسی کن اگر راهنما باید نشان داده شود
 //        if (PrefrencesHelper.getInstance().isHelpVisible()) {
@@ -395,13 +385,6 @@ public class MyActivity extends AppCompatActivity {
 //        }
 
     }
-
-//    private void initCurrentBaseFrequesncyArray() {
-//        for (int j = 0; j < 289; j++) {
-//            freqInThisReference[j] = /*allFrequencies*/freqInThisReference/*[j]*/[(int) PrefrencesHelper.getInstance().getBaseFrequency() - 414];
-//        }
-//
-//    }
 
     @Override
     public void onDestroy() { // اگر از برنامه خارج شد
@@ -431,8 +414,9 @@ public class MyActivity extends AppCompatActivity {
     }
 
     private void createToneGeneratorDialog() {
-        Dialog dlg = new Dialog(MyActivity.this, R.style.TransparentProgressDialog);
+
         // ظاهر دیاپازون از این لایوت خوانده می شود
+        Dialog dlg = new Dialog(MyActivity.this, R.style.TransparentProgressDialog);
         dlg.setContentView(R.layout.tone_generator);
         dlg.setCancelable(true);
 
@@ -450,8 +434,6 @@ public class MyActivity extends AppCompatActivity {
         Button btnPlaySound = (Button) dlg.findViewById(R.id.btn_play_tone);
 
 
-        final int baseFrequency = (int) PrefrencesHelper.getInstance().getBaseFrequency();
-
 // نمایش حالت انتخاب شده برای تولید صدا در دیاپازون
         tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
         tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
@@ -461,10 +443,10 @@ public class MyActivity extends AppCompatActivity {
         btnPlaySound.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
-// راه اندازی ابتدائی دیاپازون
-                initToneGenerator(tg_frequency);
 
+                    tg_frequency = freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave];
+                    // راه اندازی ابتدائی دیاپازون
+                    initToneGenerator(tg_frequency);
             }
         });
 
@@ -492,7 +474,7 @@ public class MyActivity extends AppCompatActivity {
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
                 octavePicker.setValue(TG_OCTAVE);
 
-                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave];
 
             }
         });
@@ -519,7 +501,7 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
                 octavePicker.setValue(TG_OCTAVE);
-                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave];
 
             }
         });
@@ -531,7 +513,7 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
-                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave];
 
             }
         });
@@ -547,15 +529,12 @@ public class MyActivity extends AppCompatActivity {
                 tgTxtNoteToneViewer.setText(notes_C[currentIndexOfThisOctave]);
                 tgTxtOctaveViewer.setText(String.valueOf(TG_OCTAVE));
                 tgImgSignViewer.setImageResource(getResourceBySharpSign(sharps_C[currentIndexOfThisOctave]));
-                tg_frequency = /*allFrequencies*/freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave]/*[baseFrequency - 414]*/;
+                tg_frequency = freqInThisReference[TG_OCTAVE * 24 + currentIndexOfThisOctave];
 
             }
         });
 
-
         dlg.show();
-
-
     }
 
 
@@ -564,12 +543,12 @@ public class MyActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 // در حین اجرا صدا مربوطه توسط متود زیر تولید می شود
-                genTone(frqOfTone);
                 handler.post(new Runnable() {
 
                     public void run() {
                         try {
                             // صدای تولید شده در مزحله قبلی در اینجا پخش می شود
+                            genTone(frqOfTone);
                             playSound();
                         } catch (IllegalStateException e) {
                             e.printStackTrace();
@@ -598,6 +577,7 @@ public class MyActivity extends AppCompatActivity {
     }
 
     void playSound() throws IllegalStateException {
+
         // یک شی اندرویدی که حاوی صدای انالوگ است را اجرا کن
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
@@ -886,7 +866,7 @@ public class MyActivity extends AppCompatActivity {
 //        float xscale = width / 19.5f; /// it was 11
 //        final float dge2 = ((float) noteModel.getCents() * (/*xscale*/ 1 / gaugeSpinInteger));
         // انیشمیشن مربوط به چرخش اندیکاتر
-        float dge2 = (float)Math.toDegrees(Math.tan(noteModel.getCents() / 30) * 1.44);
+        float dge2 = (float) Math.toDegrees(Math.tan(noteModel.getCents() / 30) * 1.44);
 
         if (lock.compareAndSet(true, true)) {
             try {
