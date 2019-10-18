@@ -622,9 +622,6 @@ public class MyActivity extends AppCompatActivity {
 //                intent.setPackage("com.farsitel.bazaar");
 //                startActivity(intent);
 
-                // اگر درخواست عدم نمایش راهنما زده شود
-
-//                PrefrencesHelper.getInstance().setHelpVisible(false);
                 dlg.dismiss();
             }
         });
@@ -633,196 +630,6 @@ public class MyActivity extends AppCompatActivity {
         return dlg;
     }
 
-
-//    private void createSettingDialog() {
-//
-//        // دیالوگ تنظیمات در اینا ساخته می شود
-//        Dialog dlg = new Dialog(MyActivity.this, R.style.MyDialogTheme);
-//        dlg.setContentView(R.layout.settings_activity);
-//        dlg.setCancelable(true);
-//
-//
-//        RippleView rippleFB = (RippleView) dlg.findViewById(R.id.fb_ripple);
-//        RippleView rippleText = (RippleView) dlg.findViewById(R.id.text_ripple);
-//
-//
-//        refrencePicker = (NumberPicker) dlg.findViewById(R.id.numRefrenceFrequency);
-//        refrencePicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-//        refrencePicker.setMinValue(414);
-//        refrencePicker.setMaxValue(454);
-//        refrencePicker.setValue((int) PrefrencesHelper.getInstance().getBaseFrequency());
-//        refrencePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                // فرکانس انتخابی را در دستگاه ذخیره کن
-//                PrefrencesHelper.getInstance().setBaseFrequency(newVal);
-//                initFloats();
-////                initCurrentBaseFrequesncyArray();
-//
-//            }
-//        });
-//
-//        txtBaseNote = (TextView) dlg.findViewById(R.id.txt_base_not_view);
-//        imgBemol1 = (ImageView) dlg.findViewById(R.id.bemol1);
-//        imgBemol2 = (ImageView) dlg.findViewById(R.id.bemol2);
-//        imgBemol3 = (ImageView) dlg.findViewById(R.id.bemol3);
-//        imgBemol4 = (ImageView) dlg.findViewById(R.id.bemol4);
-//        // تنظیم نیم گرده ها
-//        if (PrefrencesHelper.getInstance().getBaseBemol().length() > 4) {
-//            PrefrencesHelper.getInstance().setBaseBemol("");
-//
-//        }
-//        if (PrefrencesHelper.getInstance().getBaseBemol().length() == 0) {
-//            imgBemol1.setVisibility(View.INVISIBLE);
-//            imgBemol2.setVisibility(View.INVISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 1) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.INVISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 2) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.INVISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 3) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.VISIBLE);
-//            imgBemol4.setVisibility(View.INVISIBLE);
-//        } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 4) {
-//            imgBemol1.setVisibility(View.VISIBLE);
-//            imgBemol2.setVisibility(View.VISIBLE);
-//            imgBemol3.setVisibility(View.VISIBLE);
-//            imgBemol4.setVisibility(View.VISIBLE);
-//        }
-//
-//
-//        laySelectBemol = (LinearLayout) dlg.findViewById(R.id.layBemolSelection);
-//        laySelectBemol.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // بصورت چرخشی ربع پرده را تغییر بده
-//                PrefrencesHelper.getInstance().setBaseBemol("b" + PrefrencesHelper.getInstance().getBaseBemol());
-//                if (PrefrencesHelper.getInstance().getBaseBemol().length() > 4) {
-//                    PrefrencesHelper.getInstance().setBaseBemol("");
-//
-//                }
-//                if (PrefrencesHelper.getInstance().getBaseBemol().length() == 0) {
-//                    imgBemol1.setVisibility(View.INVISIBLE);
-//                    imgBemol2.setVisibility(View.INVISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 1) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.INVISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 2) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.INVISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 3) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.VISIBLE);
-//                    imgBemol4.setVisibility(View.INVISIBLE);
-//                } else if (PrefrencesHelper.getInstance().getBaseBemol().length() == 4) {
-//                    imgBemol1.setVisibility(View.VISIBLE);
-//                    imgBemol2.setVisibility(View.VISIBLE);
-//                    imgBemol3.setVisibility(View.VISIBLE);
-//                    imgBemol4.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//        txtBaseNote.setText(PrefrencesHelper.getBaseNote());
-//
-//        laySelectBaseNote = (LinearLayout) dlg.findViewById(R.id.lay_base_not);
-//        laySelectBaseNote.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // نت پایه را تغییر بده و در دستگاه ذخیره کن
-//                String bN = PrefrencesHelper.getInstance().getBaseNote();
-//                String nextBaseNote = "";
-//                if (bN.equals("C")) {
-//                    nextBaseNote = "B♭";
-//                } else if (bN.endsWith("B♭")) {
-//                    nextBaseNote = "F";
-//                } else if (bN.equals("F")) {
-//                    nextBaseNote = "E♭";
-//                } else if (bN.equals("E♭")) {
-//                    nextBaseNote = "C";
-//                }
-//                PrefrencesHelper.getInstance().setBaseNote(nextBaseNote);
-//                txtBaseNote.setText(nextBaseNote);
-//            }
-//        });
-//
-//        // تنظیمات به اشتراک گذاری در فیسبوک در اینجا انجام می شود
-//        callbackManager = CallbackManager.Factory.create();
-//        shareDialog = new ShareDialog(this);
-//        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-//
-//            @Override
-//            public void onSuccess(Sharer.Result result) {
-//
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException e) {
-//
-//            }
-//        });
-//        // محتوای به اشتراک گذاری در فیسبوک :
-//        ShareLinkContent content = new ShareLinkContent.Builder()
-//                .setContentUrl(Uri.parse("https://www.google.com"))
-//                .setContentTitle("Sout Azin Quarter Tone Tuner")
-//                .setImageUrl(Uri.parse("http://www.soutazin.ir/images/hdr-SA-logo.gif"))
-//                .setContentDescription("Download From Play Store")
-//                .build();
-//
-//        ShareButton shareButton = (ShareButton) dlg.findViewById(R.id.facebook_share_button);
-//        shareButton.setShareContent(content);
-//
-//
-//// تنظیمات به اشتراک گذاری متنی در اینجا انجام می شود
-//        Button buttonShare = (Button) dlg.findViewById(R.id.shareViaText);
-//
-//        rippleText.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-//            @Override
-//            public void onComplete(RippleView rippleView) {
-//
-//                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-//                sharingIntent.setType("text/plain");
-//                final Intent intent = sharingIntent.putExtra(Intent.EXTRA_TEXT, "Quarter Tone Tuner by SoutAzin. Persian Version. Download from : " + "https://play.google.com/store/apps/details?id=" + getPackageName());
-//                startActivity(Intent.createChooser(sharingIntent, "Share Rohab"));
-//            }
-//        });
-//// اینجا انتخاب می شود که از علامت های فارسی استفاده شود یا خیر
-////        chkPersian = (CheckBox) dlg.findViewById(R.id.chk_persian_signs);
-////        chkPersian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////            @Override
-////            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-////                 در دستگاه ذخیره کن
-////                PrefrencesHelper.getInstance().setPersian(b);
-////            }
-////        });
-//
-////        chkPersian.setChecked(PrefrencesHelper.getInstance().isPersian());
-//
-//
-//        dlg.show();
-//
-//
-//    }
 
     public void initFloats() {
 
@@ -863,8 +670,6 @@ public class MyActivity extends AppCompatActivity {
 
     private void startDecision(final NoteModel noteModel) {
 
-//        float xscale = width / 19.5f; /// it was 11
-//        final float dge2 = ((float) noteModel.getCents() * (/*xscale*/ 1 / gaugeSpinInteger));
         // انیشمیشن مربوط به چرخش اندیکاتر
         float dge2 = (float) Math.toDegrees(Math.tan(noteModel.getCents() / 30) * 1.44);
 
@@ -888,7 +693,6 @@ public class MyActivity extends AppCompatActivity {
                 lock.set(true);
                 // تصمیم گرفته شده را نمایش بده به محض شروع چرخش اندیگاتور
                 viewDecision(noteModel, false);
-//                    latestGaugeDegree = dge2;
             }
 
             @Override
@@ -904,7 +708,6 @@ public class MyActivity extends AppCompatActivity {
             }
         });
         imgGauge.startAnimation(gaugeAnimation);
-//        }
     }
 
     private void viewDecision(NoteModel noteModel, boolean clear) {
