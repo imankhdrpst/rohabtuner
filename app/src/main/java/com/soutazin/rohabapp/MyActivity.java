@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -336,9 +337,9 @@ public class MyActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         PrefrencesHelper.getInstance().init(getApplicationContext());
 
-        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._11sdp);
+        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._299sdp);
 
-        android.view.Display display = getWindowManager().getDefaultDisplay();
+        Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         width = size.x;
@@ -882,9 +883,10 @@ public class MyActivity extends AppCompatActivity {
 
     private void startDecision(final NoteModel noteModel) {
 
-        float xscale = width / 19.5f; /// it was 11
-        final float dge2 = ((float) noteModel.getCents() * (xscale / gaugeSpinInteger));
+//        float xscale = width / 19.5f; /// it was 11
+//        final float dge2 = ((float) noteModel.getCents() * (/*xscale*/ 1 / gaugeSpinInteger));
         // انیشمیشن مربوط به چرخش اندیکاتر
+        float dge2 = (float)Math.toDegrees(Math.tan(noteModel.getCents() / 30) * 1.44);
 
         if (lock.compareAndSet(true, true)) {
             try {

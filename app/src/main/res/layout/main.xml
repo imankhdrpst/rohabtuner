@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:gauge="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
-    android:background="@drawable/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
     android:orientation="vertical"
     tools:context=".MyActivity">
 
-    <!--<ImageView-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:src="@drawable/mainback"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:layout_centerInParent="true"/>-->
+    <ImageView
+        android:id="@+id/imgNumbers"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center"
+        android:src="@drawable/numbers"
+        android:tint="@color/Black" />
+
+    <ImageView
+        android:id="@+id/imggauge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="center"
+        android:src="@drawable/aghrabe" />
+
+    <ImageView
+        android:id="@+id/imgCorrectnessViewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="center" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="right"
-        android:weightSum="3"
-        >
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="center|top"
-            android:layout_centerHorizontal="true">
+            android:orientation="horizontal">
 
 
             <TextView
+                android:id="@+id/txtFreqViewer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/txtFreqViewer"
-                android:textColor="@color/Black"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textSize="@dimen/_17ssp"/>
-
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_17ssp" />
 
 
         </LinearLayout><!-- freq viewer-->
@@ -50,45 +63,43 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="center|top"
-            android:layout_centerHorizontal="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtOctaveViewer"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/_24ssp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtNoteViewer"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/_24ssp"/>
-
+            android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/imgSignViewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imgSignViewer"
-                android:layout_margin="3dp"
-                />
+                android:layout_margin="@dimen/_3sdp" />
+
+            <TextView
+                android:id="@+id/txtNoteViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_34ssp" />
+
+
+            <TextView
+                android:id="@+id/txtOctaveViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_34ssp" />
 
         </LinearLayout><!-- octave viewer-->
 
-
         <LinearLayout
+            android:id="@+id/layCentsViewer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/layCentsViewer"
             android:gravity="center"
-            android:visibility="invisible"
-            android:padding="5dp">
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,17 +108,16 @@
                 android:layout_centerHorizontal="true"
                 android:text="Cents"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_17ssp"/>
+                android:textSize="@dimen/_17ssp" />
 
             <TextView
+                android:id="@+id/txtCentsViewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/txtCentsViewer"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/_17ssp"/>
-
+                android:textSize="@dimen/_17ssp" />
 
 
         </LinearLayout><!-- cents viewer -->
@@ -115,116 +125,86 @@
 
     </LinearLayout>
 
-
-    <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:src="@drawable/numbers"
-            android:id="@+id/imgNumbers"
-        android:tint="@color/Black"
-            android:scaleType="center"
-            />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-            android:src="@drawable/aghrabe"
-            android:scaleType="center"
-            android:id="@+id/imggauge"
-            android:layout_centerInParent="true"
-            />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="center"
-        android:id="@+id/imgCorrectnessViewer"
-        android:layout_centerInParent="true"
-        />
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:weightSum="2"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        >
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
-        <ru.katso.livebutton.LiveButton
-            android:id="@+id/btnToneGenerator"
-            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/tone_generator"
-            android:padding="10dp"
-            android:layout_margin="5dp"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:textSize="@dimen/_12ssp"
-            livebutton:corners="4dp"
-            livebutton:normalHeight="6dp"
-            livebutton:pressedHeight="2dp"
-            livebutton:backgroundColor="@color/DarkGreen"
-            livebutton:shadowColor="@color/Green"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <ru.katso.livebutton.LiveButton
-            android:id="@+id/btnSettings"
-            xmlns:livebutton="http://schemas.android.com/apk/res-auto"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="@string/tuner_setting"
-            android:textColor="#ffffff"
-            android:padding="10dp"
-            android:textStyle="bold"
-            android:textSize="@dimen/_12ssp"
-            livebutton:corners="4dp"
-            livebutton:normalHeight="6dp"
-            livebutton:pressedHeight="2dp"
-            livebutton:backgroundColor="@color/RoyalBlue"
-            livebutton:shadowColor="@color/SteelBlue"/>
+            <ru.katso.livebutton.LiveButton
+                xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnToneGenerator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/tone_generator"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                livebutton:backgroundColor="@color/DarkGreen"
+                livebutton:corners="@dimen/_4sdp"
+                livebutton:normalHeight="@dimen/_6sdp"
+                livebutton:pressedHeight="@dimen/_2sdp"
+                livebutton:shadowColor="@color/Green" />
+
+            <ru.katso.livebutton.LiveButton xmlns:livebutton="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnSettings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/tuner_setting"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                livebutton:backgroundColor="@color/RoyalBlue"
+                livebutton:corners="@dimen/_4sdp"
+                livebutton:normalHeight="@dimen/_6sdp"
+                livebutton:pressedHeight="@dimen/_2sdp"
+                livebutton:shadowColor="@color/SteelBlue" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:src="@drawable/sa"
+                android:tint="@color/MidnightBlue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="@dimen/_9ssp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_9ssp"
-            android:text="@string/description"
-            android:textColor="@color/MidnightBlue"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sa"
-            android:tint="@color/MidnightBlue"
-            android:layout_marginLeft="@dimen/_6sdp"
-            android:layout_gravity="center"
-            />
-
-
-    </LinearLayout>
-
-</LinearLayout>
 
 </RelativeLayout>

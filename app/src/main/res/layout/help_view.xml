@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/_5sdp"
                 android:id="@+id/tt_help_view"
                 android:textColor="@color/White"
                 />
@@ -38,11 +38,13 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_9sdp"
                 android:id="@+id/btn_help_skip"
                 android:layout_gravity="bottom"
                 android:gravity="center"
-                android:layout_margin="2dip"
+                android:textSize="@dimen/_13ssp"
+                android:layout_margin="@dimen/_7sdp"
                 android:text="Buy Full Version"
                 />
 
