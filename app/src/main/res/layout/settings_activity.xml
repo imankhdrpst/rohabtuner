@@ -44,7 +44,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|left"
-                            android:text="Base Frequency : "
+                            android:text="Pitch Frequency : "
                             android:textColor="@color/White"
 
                             />
@@ -73,7 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/White"
-                            android:text="Base Bemols :        "/>
+                            android:text="Bemols :        "/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/White"
                             android:layout_gravity="center_vertical"
-                            android:text="Base Note :       "/>
+                            android:text="Tonic Note :       "/>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
