@@ -169,7 +169,7 @@
             android:layout_margin="5dp"
             android:textColor="#ffffff"
             android:textStyle="bold"
-            android:textSize="@dimen/_17ssp"
+            android:textSize="@dimen/_12ssp"
             livebutton:corners="4dp"
             livebutton:normalHeight="6dp"
             livebutton:pressedHeight="2dp"
@@ -188,7 +188,7 @@
             android:textColor="#ffffff"
             android:padding="10dp"
             android:textStyle="bold"
-            android:textSize="@dimen/_17ssp"
+            android:textSize="@dimen/_12ssp"
             livebutton:corners="4dp"
             livebutton:normalHeight="6dp"
             livebutton:pressedHeight="2dp"
@@ -209,7 +209,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_9ssp"
             android:text="@string/description"
             android:textColor="@color/MidnightBlue"/>
 
@@ -218,7 +218,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/sa"
             android:tint="@color/MidnightBlue"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/_6sdp"
             android:layout_gravity="center"
             />
 

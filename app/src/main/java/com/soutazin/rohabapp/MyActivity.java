@@ -336,7 +336,7 @@ public class MyActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         PrefrencesHelper.getInstance().init(getApplicationContext());
 
-        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._17sdp);
+        gaugeSpinInteger = (int) getResources().getDimension(R.dimen._11sdp);
 
         android.view.Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
