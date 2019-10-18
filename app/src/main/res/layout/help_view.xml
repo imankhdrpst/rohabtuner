@@ -44,7 +44,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="center"
                 android:textSize="@dimen/_13ssp"
-                android:layout_margin="@dimen/_7sdp"
+                android:layout_margin="@dimen/_3sdp"
                 android:text="Buy Full Version"
                 />
 
